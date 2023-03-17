@@ -1,6 +1,6 @@
 
 const studentList = [
-    //mock JOSN data of student data of a course. Course name is required to make the call
+    //FIrst API call mock JOSN data of student data of a course. Course name is required to make the call
     {"email":"111@gmail.com","lastName":"Elton","universityId":null,"userId":19266,"firstName":"John","isAdmin":false,"id":16990,"enrolledIn":476,"instructorId":null,"isLti":false},
 
     {"email":"tiitviitso@gmail.com","lastName":"Mercury","universityId":"b25631","userId":19347,"firstName":"Freddie","isAdmin":false,"id":17071,"enrolledIn":476,"instructorId":null,"isLti":false},
@@ -12,7 +12,7 @@ const studentList = [
 
 
 const studentAssigmentData = [
-//mock JOSN data of an assigment done by a student. Student id from StudentList is required to make the call. 
+//second API call mock JOSN data of an assigment done by a student. Student id from StudentList is required to make the call. 
 //assume student id = 19266 
 
     {
@@ -51,13 +51,11 @@ function initTableRow (array){
 
 }
 
-initTableRow(studentList);
-assignData()
-
 function assignData (){
 //assign data based on the student id on the row
+//dynamically assign values relative to student id
     const tableRows = document.getElementById("progressTableBody").rows
-
+    //test model
     studentList.forEach(element => { 
         if (element.id == 16990) {
             console.log(element.firstName)
@@ -73,3 +71,7 @@ function assignData (){
 });
 
 }
+
+
+initTableRow(studentList);
+assignData();
