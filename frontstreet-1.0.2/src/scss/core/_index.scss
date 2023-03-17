@@ -1,0 +1,31 @@
+// --------------------------------------------------
+// Core Partials
+// --------------------------------------------------
+
+//
+// Reset and Dependencies
+//
+
+@import 'normalize';
+@import 'print';
+@import 'scaffolding'; // Compiled = < 1 KB
+
+//
+// Colors
+//
+
+@import 'colors'; // Compiled = 5 KB
+
+//
+// Elements
+//
+
+@import 'animations'; // Compiled = < 1 KB
+@import 'grid'; // Compiled = 21 KB
+@import 'type'; // Compiled = 7 KB
+@import 'lists'; // Compiled = 1 KB
+@import 'tables'; // Compiled = 3 KB
+@import 'forms'; // Compiled = 11 KB
+@import 'buttons'; // Compiled = 8 KB
+@import 'media'; // Compiled = 6 KB
+@import 'utilities'; // Compiled = 1 KB

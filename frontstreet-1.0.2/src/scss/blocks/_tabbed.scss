@@ -1,0 +1,45 @@
+// --------------------------------------------------
+// Tabbed Content
+// --------------------------------------------------
+
+.fs-tabbed {
+  margin: $fs-tabbed-margin;
+
+  .tab-content {
+    padding: 0 5px;
+  }
+  .tab-pane {
+    display: none;
+  }
+  .tab-pane.active {
+    display: block;
+  }
+  &.tabs-framed {
+    .submenu-tabs {
+      margin-bottom: 0;
+    }
+    .menu-bar,
+    .submenu-bar,
+    .submenu-pills {
+      margin-bottom: $fs-element-spacing / 2;
+    }
+    .tab-content {
+      border-style: solid;
+      border-width: $fs-tab-content-border-width;
+      margin-top: -$fs-tabs-border-width;
+      padding: $fs-tab-content-padding;
+      padding-top: $fs-tab-content-padding + 1;
+    }
+  }
+
+  @include fs-margin-vert-flush;
+}
+
+@include fs-tab-content-variant;
+
+.text-light {
+  @include fs-tab-content-variant('inverse');
+}
+.text-dark {
+  @include fs-tab-content-variant;
+}

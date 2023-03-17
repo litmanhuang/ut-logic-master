@@ -1,0 +1,97 @@
+// --------------------------------------------------
+// Mobile (only) Navigation
+// --------------------------------------------------
+
+.mobile-menu-bar {
+  overflow: hidden;
+  position: relative;
+
+  @include fs-list-unstyled;
+
+  .menu-btn {
+    border: none;
+    font-size: $fs-mobile-menu-bar-btn-font-size;
+    font-weight: $fs-mobile-menu-bar-btn-font-weight;
+    letter-spacing: $fs-mobile-menu-bar-btn-letter-spacing;
+    padding: fs-em(18px, $fs-mobile-menu-bar-btn-font-size)
+      fs-em(20px, $fs-mobile-menu-bar-btn-font-size);
+    text-transform: $fs-mobile-menu-bar-btn-text-transform;
+  }
+  &.text-dark .menu-btn {
+    color: $fs-color-text-darken;
+
+    &:hover,
+    &:focus {
+      background-color: rgba($fs-color-light, 0.3);
+    }
+  }
+  &.text-light .menu-btn {
+    color: $fs-color-text-inv-darken;
+
+    &:hover,
+    &:focus {
+      background-color: rgba($fs-color-black, 0.3);
+    }
+  }
+
+  // Sub-level indicator icons
+  li.menu-item-has-children > .menu-btn {
+    @if ($direction == 'rtl') {
+      padding-left: 2.5em;
+    } @else {
+      padding-right: 2.5em;
+    }
+  }
+  li.menu-item-has-children > .menu-btn .sub-indicator {
+    background-size: 0.8em 0.8em;
+    @if ($direction == 'rtl') {
+      transform: rotate(90deg) translate(-50%, 0); // point left
+    } @else {
+      transform: rotate(270deg) translate(50%, 0); // point right
+    }
+    width: 0.8em;
+    height: 0.8em;
+  }
+
+  // Back buttons
+  .menu-btn.back .sub-indicator {
+    background-size: 0.8em 0.8em;
+    display: block;
+    position: relative;
+    @if ($direction == 'rtl') {
+      transform: rotate(270deg); // point right
+    } @else {
+      transform: rotate(90deg); // point left
+    }
+    top: initial;
+    right: initial;
+    left: initial;
+    width: 1em;
+    height: 1em;
+  }
+
+  // Sub-levels
+  ul {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    @if ($direction == 'rtl') {
+      right: 100%;
+    } @else {
+      left: 100%;
+    }
+    width: 100%;
+    transform: translate3D(0, 0, 0);
+    transition: transform 0.4s ease-in-out;
+    z-index: 1;
+    @include fs-list-unstyled;
+  }
+  ul.on {
+    @if ($direction == 'rtl') {
+      transform: translate3D(100%, 0, 0);
+    } @else {
+      transform: translate3D(-100%, 0, 0);
+    }
+  }
+}

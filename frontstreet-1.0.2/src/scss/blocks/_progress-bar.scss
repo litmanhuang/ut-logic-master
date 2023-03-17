@@ -1,0 +1,53 @@
+// --------------------------------------------------
+// Progress Bars
+// --------------------------------------------------
+
+.progress {
+  background-color: $fs-progress-bar-bg;
+  border-radius: $fs-progress-bar-radius;
+  display: flex;
+  margin: $fs-progress-margin;
+  overflow: hidden; // Force rounded corners by cropping it.
+  position: relative;
+  line-height: $fs-progress-bar-height;
+  text-align: center;
+
+  @include fs-margin-vert-flush;
+}
+.progress-bar {
+  height: $fs-progress-bar-height;
+  line-height: $fs-progress-bar-height;
+}
+.fs-progress {
+  font-size: $fs-progress-bar-font-size;
+  margin: $fs-progress-margin;
+  padding-top: $fs-progress-bar-label-spacing;
+  position: relative;
+
+  @include fs-margin-vert-flush;
+
+  .progress-label,
+  .progress-value {
+    font-size: $fs-progress-bar-font-size;
+    line-height: 1;
+    position: absolute;
+    top: 0;
+  }
+  .progress-label {
+    @if ($direction == 'rtl') {
+      right: 1px;
+    } @else {
+      left: 1px;
+    }
+  }
+  .progress-value {
+    @if ($direction == 'rtl') {
+      left: 1px;
+    } @else {
+      right: 1px;
+    }
+  }
+  .progress {
+    margin: 0;
+  }
+}

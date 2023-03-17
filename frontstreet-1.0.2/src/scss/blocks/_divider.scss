@@ -1,0 +1,66 @@
+// --------------------------------------------------
+// Dividers
+// --------------------------------------------------
+
+hr,
+.fs-divider {
+  border: none;
+  border-radius: $fs-divider-radius;
+  display: block;
+  height: $fs-divider-height;
+  margin: $fs-divider-margin 0;
+}
+hr:not(.fs-divider) {
+  background-color: $fs-hr-bg-color;
+}
+.text-light hr:not(.fs-divider) {
+  background: $fs-hr-bg-color-inv;
+}
+.text-dark hr:not(.fs-divider) {
+  background: $fs-hr-bg-color;
+}
+
+//
+// Thickness (height)
+//
+
+.fs-divider {
+  &.divider-thick {
+    height: $fs-divider-height * 2;
+  }
+  &.divider-thicker {
+    height: $fs-divider-height * 3;
+  }
+  &.divider-thickest {
+    height: $fs-divider-height * 4;
+  }
+}
+
+//
+// Size (width)
+//
+
+.fs-divider {
+  @each $size, $width in $fs-divider-sizes {
+    &.divider-#{$size} {
+      width: $width;
+    }
+  }
+}
+
+//
+// Alignment
+//
+
+.fs-divider {
+  &.divider-left {
+    margin-right: auto;
+  }
+  &.divider-right {
+    margin-left: auto;
+  }
+  &.divider-center {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

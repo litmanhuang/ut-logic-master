@@ -1,0 +1,21 @@
+// --------------------------------------------------
+// Inline Labels
+// --------------------------------------------------
+
+.label-inline {
+  border-radius: 2px;
+  display: inline-block;
+  font-size: $fs-inline-label-font-size;
+  font-weight: $fs-font-weight-bold;
+  line-height: 1;
+  padding: $fs-inline-label-padding;
+  text-align: center;
+  text-transform: $fs-inline-label-text-transform;
+  white-space: nowrap;
+  vertical-align: baseline;
+
+  &.label-default {
+    background: $fs-inline-label-bg-color;
+    color: $fs-color-text-inv-base;
+  }
+}

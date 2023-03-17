@@ -1,0 +1,13 @@
+/*!
+ * Front Street 1.0.1 (http://frontstreet.io)
+ * Core Library Only, for minimal integration.
+ * Direction: Right-to-Left
+ * Copyright 2018 Theme Blvd
+ * Copyright 2018 Jason Bobich
+ */
+
+$direction: 'rtl';
+$version: 'core';
+
+@import 'utils/index';
+@import 'core/index';

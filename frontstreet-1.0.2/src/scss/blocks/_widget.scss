@@ -1,0 +1,93 @@
+// --------------------------------------------------
+// Widgets
+// --------------------------------------------------
+
+.widget {
+  background: $fs-widget-bg-color;
+  font-size: $fs-widget-font-size;
+  margin: $fs-widget-margin;
+  padding: $fs-widget-padding;
+
+  @include fs-margin-vert-flush;
+
+  &.over-bg-content {
+    background: $fs-body-bg-color;
+  }
+}
+
+//
+// Style: Default
+//
+
+.widget-default {
+  .widget-title {
+    font-size: $fs-widget-default-title-size;
+
+    &.heading-sm,
+    &.heading-xs,
+    &.heading-xxs,
+    &.heading-xxxs {
+      font-size: $fs-widget-default-sm-title-size;
+    }
+  }
+}
+
+//
+// Style: Classic/Color Panel
+//
+
+.panel-classic,
+.panel-color {
+  .widget-title {
+    background: $fs-widget-classic-panel-title-bg-color;
+    font-size: $fs-widget-panel-classic-title-size;
+    margin: -$fs-widget-padding;
+    margin-bottom: 24px;
+    padding: 24px $fs-widget-padding;
+
+    &.heading-sm,
+    &.heading-xs,
+    &.heading-xxs,
+    &.heading-xxxs {
+      font-size: $fs-widget-panel-classic-sm-title-size;
+    }
+  }
+  @each $name, $map in $fs-border-utils {
+    &.border-#{$name} .widget-title {
+      border-bottom: map-get($map, width) map-get($map, style) map-get($map, color);
+    }
+  }
+}
+
+// This is a bit of a hack so that we can override color library
+// for content area of widget, but avoid using !important.
+body .panel-classic {
+  background-color: $fs-tab-content-bg;
+  color: $fs-color-text-base;
+}
+
+//
+// Style: Modnern Panel
+//
+
+.panel-modern {
+  .widget-title {
+    border-bottom: 2px solid $fs-body-bg-color;
+    font-size: $fs-widget-panel-modern-title-size;
+    margin: -$fs-widget-padding;
+    margin-bottom: 20px;
+    padding: 20px $fs-widget-padding;
+
+    &.heading-sm,
+    &.heading-xs,
+    &.heading-xxs,
+    &.heading-xxxs {
+      font-size: $fs-widget-panel-modern-sm-title-size;
+    }
+  }
+  &.over-bg-content {
+    .widget-title {
+      border-bottom-color: $fs-widget-bg-color;
+    }
+  }
+}
