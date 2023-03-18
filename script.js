@@ -1,3 +1,25 @@
+//In the Carnap version, all HTML elements should be created on load. For testing, "thead" and "tbody" are hard coded. 
+
+// First API call to Carnap server to retrieve student data in the logic course
+
+// let apiKey = "?"
+// let instructor = "litmanhuang@gmail.com"
+
+
+// const requestOptions = {
+
+//     method: 'GET',
+//     mode: 'cors',
+//     headers: {
+//         "Content-Type": "application/json",
+//         "X-API-KEY":apiKey}
+// };
+// fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses`, requestOptions)
+//     .then(response => response.json())
+//     .then(response => console.log(response));
+
+// URL for the second API call to retrieve assigment data of a particular student: `https://carnap.io/api/v1/${instructors}/:instructorIdent/courses/:courseTitle/students/${studnetList.id}/submissions`
+
 
 const studentList = [
     //FIrst API call mock JOSN data of student data of a course. Course name is required to make the call
