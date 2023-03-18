@@ -2,21 +2,21 @@
 
 // First API call to Carnap server to retrieve student data in the logic course
 
-// let apiKey = "?"
-// let instructor = "litmanhuang@gmail.com"
+let apiKey = "JyBcvyoCj-AjcspJt1Sp8p6lnedI_3f8Z0DOjEid6QOd"
+let instructor = "litmanhuang@gmail.com"
 
 
-// const requestOptions = {
+const requestOptions = {
 
-//     method: 'GET',
-//     mode: 'cors',
-//     headers: {
-//         "Content-Type": "application/json",
-//         "X-API-KEY":apiKey}
-// };
-// fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses`, requestOptions)
-//     .then(response => response.json())
-//     .then(response => console.log(response));
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY":apiKey}
+};
+fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses`, requestOptions)
+    .then(response => response.json())
+    .then(response => console.log(response));
 
 // URL for the second API call to retrieve assigment data of a particular student: `https://carnap.io/api/v1/${instructors}/:instructorIdent/courses/:courseTitle/students/${studnetList.id}/submissions`
 
@@ -35,7 +35,6 @@ const studentList = [
 
 const studentAssigmentData = [
 //second API call mock JOSN data of an assigment done by a student. Student id from StudentList is required to make the call. 
-//assume student id = 19266 
 
     {
       'problemSubmissionAssignmentId': 3001, 
@@ -50,6 +49,7 @@ const studentAssigmentData = [
       'problemSubmissionExtra': "None"
     }
   ]
+
 
 
 function initTableRow (array){
@@ -78,21 +78,16 @@ function assignData (){
 //dynamically assign values relative to student id
     const tableRows = document.getElementById("progressTableBody").rows
     //test model
-    studentList.forEach(element => { 
-        if (element.id == 16990) {
-            console.log(element.firstName)
-            console.log(element.id == 16990)
-            
-        }
 
-        else {
-            return
-            
-        }
+  for (let i = 0; i < tableRows.length; i++) {
+    let initId = tableRows[i].innerHTML
+    //for each student id, make an API call to server with ${initID} inside the URL. 
+    //assignData should ba a callback function
+    
+    
+  }
 
-});
-
-}
+};
 
 
 initTableRow(studentList);
