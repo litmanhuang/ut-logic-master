@@ -1,4 +1,3 @@
-//In the Carnap version, all HTML elements should be created on load. For testing, "thead" and "tbody" are hard coded. 
 
 // First API call to Carnap server to retrieve student data in the logic course
 
@@ -49,26 +48,45 @@ const studentAssigmentData = [
       'problemSubmissionExtra': "None"
     }
   ]
+  
+  //
+
+
+  const body = document.body
+  const table = document.createElement("table")
+
+  function generateHeading (){
+    const heading = document.createElement("h1")
+    heading.innerHTML = "Student Progress"
+    body.appendChild(heading)
+
+  }
+
+  function generateProgressTableHead() {
+    
+    let thead = table.createTHead();
+    let row = thead.insertRow();
+
+    thead.appendChild(row)
+    table.appendChild(thead)
+    body.appendChild(table)
+
+  }
 
 
 
-function initTableRow (array){
-    //initialsing table rows with the first colum as student id
-    //
-
-    const progressTableBody = document.getElementById("progressTableBody")
+function generateProfressTableBody (table, array){
 
     for (let i = 0; i < array.length; i++) {
-        
-        const tableRows = document.createElement("tr")
 
-        const cell = document.createElement("td")
-  
-        const cellText = document.createTextNode(array[i].id)
-
-        cell.appendChild(cellText)
-        tableRows.appendChild(cell)
-        progressTableBody.appendChild(tableRows)
+        for (let element of array) {
+            let row = table.insertRow();
+            for (key in element) {
+              let cell = row.insertCell();
+              let text = document.createTextNode(element[key]);
+              cell.appendChild(text);
+            }
+          }
     }
 
 }
@@ -88,7 +106,8 @@ function assignData (){
   }
 
 };
+generateHeading()
+generateProfressTableBody(table, studentList);
+generateProgressTableHead();
 
-
-initTableRow(studentList);
-assignData();
+// assignData();
