@@ -51,14 +51,14 @@ const studentAssigmentData = [
   
   //
 
-
+  const mainContainer = document.getElementById("main")
   const body = document.body
   const table = document.createElement("table")
 
   function generateHeading (){
     const heading = document.createElement("h1")
     heading.innerHTML = "Student Progress"
-    body.appendChild(heading)
+    mainContainer.appendChild(heading)
 
   }
 
@@ -69,13 +69,13 @@ const studentAssigmentData = [
 
     thead.appendChild(row)
     table.appendChild(thead)
-    body.appendChild(table)
+    mainContainer.appendChild(table)
 
   }
 
 
 
-function generateProfressTableBody (table, array){
+function generateProgressTableBody (table, array){
 
     for (let i = 0; i < array.length; i++) {
 
@@ -107,7 +107,7 @@ function assignData (){
 
 };
 generateHeading()
-generateProfressTableBody(table, studentList);
+generateProgressTableBody(table, studentList);
 generateProgressTableHead();
 
 // assignData();
