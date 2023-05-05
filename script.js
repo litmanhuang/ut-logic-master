@@ -1,150 +1,81 @@
+//mock data 
 
-// // First API call to Carnap server to retrieve student data in the logic course
+const courseData = [
+  {
+    "textBook": 12,
+    "instructor": 1123,
+    "enrollmentOpen": false,
+    "endDate": "2021-05-19T04:59:59Z",
+    "startDate": "2021-01-26T05:59:59Z",
+    "textbookProblems": {
+      "readAssignmentTable": [
+        [
+          1,
+          "2021-05-15T04:59:59Z"
+        ],
+      ]
+    },
+    "totalPoints": 0,
+    "title": "UT Logic",
+    "timeZone": "America/Chicago",
+    "description": null
+  }
+]
 
-// let myCourse = "Tartu%20-%20Introduction%20to%20Logic%20(Eng)";
-// let instructor = "litmanhuang@gmail.com";
+const courseStudentInfo = [
+  {"email":"yegorbakosh@gmail.com","lastName":"Bakosh","universityId":null,"userId":19266,"firstName":"Yehor","isAdmin":false,"id":16990,"enrolledIn":476,"instructorId":null,"isLti":false},
 
+  {"email":"tiitviitso@gmail.com","lastName":"Viitso","universityId":"b25631","userId":19347,"firstName":"Tiit-Rein","isAdmin":false,"id":17071,"enrolledIn":476,"instructorId":null,"isLti":false},
 
-// let apiKey = "JyBcvyoCj-AjcspJt1Sp8p6lnedI_3f8Z0DOjEid6QOd";
+  {"email":"hpoe.f20@warren-wilson.edu","lastName":"Poe","universityId":null,"userId":19882,"firstName":"Hannah","isAdmin":false,"id":17570,"enrolledIn":476,"instructorId":null,"isLti":false},{"email":"efremct96@gmail.com","lastName":"Torrisi","universityId":null,"userId":19883,"firstName":"Efrem","isAdmin":false,"id":17571,"enrolledIn":476,"instructorId":null,"isLti":false},{"email":"bastl22@seznam.cz","lastName":"Bastl","universityId":null,"userId":19349,"firstName":"Lukáš","isAdmin":false,"id":17574,"enrolledIn":476,"instructorId":null,"isLti":false},{"email":"frankhawk18@outlook.com","lastName":"Seurer","universityId":null,"userId":19888,"firstName":"Frank","isAdmin":false,"id":17577,"enrolledIn":476,"instructorId":null,"isLti":false},{"email":"erdem.b1105@gmail.com","lastName":"Dorjpurev","universityId":null,"userId":20027,"firstName":"Yanjinkhorol","isAdmin":false,"id":17715,"enrolledIn":476,"instructorId":null,"isLti":false},{"email":"lilekfialovy@gmail.com","lastName":"Hálová","universityId":null,"userId":20039,"firstName":"Šarlota","isAdmin":false,"id":17729,"enrolledIn":476,"instructorId":null,"isLti":false}]
 
-// const requestOptions = {
-//   method: 'GET',
-//   mode: 'cors',
-//   headers: {
-//     "Content-Type": "application/json",
-//     "X-API-KEY":apiKey}
-// };
-// fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses/${myCourse}/students`, requestOptions)
-//   .then(response => response.json())
-//   .then(response => studentList.push(response));
-
-// URL for the second API call to retrieve assigment data of a particular student: `https://carnap.io/api/v1/${instructors}/:instructorIdent/courses/:courseTitle/students/${studnetList.id}/submissions`
-
-
-function getStudentId (callback){
-
+const studentProblemInfo = {
+  'problemSubmissionAssignmentId': 3001, 
+  'problemSubmissionCorrect': "false", 
+  'problemSubmissionData': "qualitative", 
+  'problemSubmissionSource': {'tag': 'Assignment', 'contents': 'AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3001}}'}, 'problemSubmissionCredit': 1, 
+  'problemSubmissionIdent': 'Exercise-24', 
+  'problemSubmissionUserId': 10385, 
+  'problemSubmissionLateCredit': "None", 
+  'problemSubmissionType': 'Qualitative', 
+  'problemSubmissionTime': '2021-04-26T19:14:06.563900857Z', 
+  'problemSubmissionExtra': "None"
 }
 
-function getStudentChallengeData (studentId){
-  let challenge = {
-    state: "",
-    id: 0,
-    creationTime:"",
-    deadLine:"",
-    submissionTime:""
-  };
+const courseSelect = document.getElementById("course-select");
 
-  let assigmentState = {};
-
-  const requestOptions = {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-KEY":apiKey}
-  };
-  fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses/${myCourse}/${studentId}`, requestOptions)
-    .then(response => response.json())
-    .then(response => response=assigmentState);
+function addCourse(){
   
-  
+  for (let i = 0; i < courseData.length; i++) {
+    let courseTitle = courseData[i].title
+    let newOption = new Option(courseTitle, courseTitle)
+    courseSelect.add(newOption, undefined)
+  }
 }
 
+function addStudent(){
 
-
-
-let challengeList = [];
-
-let studentList = [];
-    //FIrst API call mock JOSN data of student data of a course. Course name is required to make the call
-    // {"email":"111@gmail.com","lastName":"Elton","universityId":null,"userId":19266,"firstName":"John","isAdmin":false,"id":16990,"enrolledIn":476,"instructorId":null,"isLti":false},
-
-    // {"email":"tiitviitso@gmail.com","lastName":"Mercury","universityId":"b25631","userId":19347,"firstName":"Freddie","isAdmin":false,"id":17071,"enrolledIn":476,"instructorId":null,"isLti":false},
-
-    // {"email":"hpoe.f20@warren-wilson.edu","lastName":"Messi","universityId":null,"userId":19882,"firstName":"Leo","isAdmin":false,"id":17570,"enrolledIn":476,"instructorId":null,"isLti":false},
-
-    // {"email":"efremct96@gmail.com","lastName":"May","universityId":null,"userId":19883,"firstName":"Theresa","isAdmin":false,"id":17571,"enrolledIn":476,"instructorId":null,"isLti":false}
-
-
-let studentAssigmentData = [];
-//second API call mock JOSN data of an assigment done by a student. Student id from StudentList is required to make the call. 
-
-    // {
-    //   'problemSubmissionAssignmentId': 3001, 
-    //   'problemSubmissionCorrect': "false", 
-    //   'problemSubmissionData': "qualitative", 
-    //   'problemSubmissionSource': {'tag': 'Assignment', 'contents': 'AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3001}}'}, 'problemSubmissionCredit': 1, 
-    //   'problemSubmissionIdent': 'Exercise-24', 
-    //   'problemSubmissionUserId': 10385, 
-    //   'problemSubmissionLateCredit': "None", 
-    //   'problemSubmissionType': 'Qualitative', 
-    //   'problemSubmissionTime': '2021-04-26T19:14:06.563900857Z', 
-    //   'problemSubmissionExtra': "None"
-    // }
+  courseStudentInfo.forEach((student) => {
+    const row = document.createElement('tr');
+    const studentTable = document.getElementById('student-table')
   
-  //
-
-  const mainContainer = document.getElementById("main")
-  const body = document.body
-  const table = document.createElement("table")
-
-  function generateHeading (){
-    const heading = document.createElement("h1")
-    heading.innerHTML = "Student Progress"
-    mainContainer.appendChild(heading)
-
-  }
-
-  function generateProgressTableHead() {
-    
-    let tHead = table.createTHead();
-    let row = tHead.insertRow();
-
-
-    tHead.appendChild(row)
-    table.appendChild(tHead)
-    mainContainer.appendChild(table)
-
-    tHead.innerHTML("text")
-  }
-
-
-
-function generateProgressTableBody (table, array){
-
-    for (let i = 0; i < array.length; i++) {
-
-        for (let element of array) {
-            let row = table.insertRow();
-            for (key in element) {
-              let cell = row.insertCell();
-              let text = document.createTextNode(element[key]);
-              cell.appendChild(text);
-            }
-          }
-    }
-
+    // Create cells for first name and id
+    const firstNameCell = document.createElement('td');
+    const idCell = document.createElement('td');
+  
+    // Add text to cells
+    firstNameCell.textContent = student.firstName;
+    idCell.textContent = student.id;
+  
+    // Add cells to row
+    row.appendChild(firstNameCell);
+    row.appendChild(idCell);
+  
+    // Add row to table
+    studentTable.appendChild(row);
+  });
 }
 
-function assignData (){
-//assign data based on the student id on the row
-//dynamically assign values relative to student id
-    const tableRows = document.getElementById("progressTableBody").rows
-    //test model
+addCourse()
 
-  for (let i = 0; i < tableRows.length; i++) {
-    let initId = tableRows[i].innerHTML
-    //for each student id, make an API call to server with ${initID} inside the URL. 
-    //assignData should ba a callback function
-    
-    
-  }
-
-};
-
-
-generateHeading()
-generateProgressTableBody(table, studentList);
-generateProgressTableHead();
-
-// assignData();
+addStudent()
