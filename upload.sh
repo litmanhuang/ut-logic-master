@@ -1,5 +1,5 @@
 # push to student_progress_app.md
-curl -H "X-API-KEY:bDIGolpQe4yzzxOUmqBej_VPrep7Vf7vOsyz39cb6ztJ"  -T "/Users/litmanhuang/projects/The-Logic-Master/student_progress_app.md" \
+curl -H "X-API-KEY:bDIGolpQe4yzzxOUmqBej_VPrep7Vf7vOsyz39cb6ztJ"  -T "/Users/litmanhuang/Apps/philosophy/The-Logic-Master/student_progress_app.md" \
     https://carnap.io/api/v1/instructors/litmanhuang@gmail.com/documents/9109/data
 
 # push to demo.md
@@ -8,7 +8,7 @@ curl -H "X-API-KEY:bDIGolpQe4yzzxOUmqBej_VPrep7Vf7vOsyz39cb6ztJ"  -T "/Users/lit
 
 
 # push to appScript.js 
-curl -H "X-API-KEY:bDIGolpQe4yzzxOUmqBej_VPrep7Vf7vOsyz39cb6ztJ"  -T "/Users/litmanhuang/projects/The-Logic-Master/table.js" \
+curl -H "X-API-KEY:bDIGolpQe4yzzxOUmqBej_VPrep7Vf7vOsyz39cb6ztJ"  -T "/Users/litmanhuang/Apps/philosophy/The-Logic-Master/table.js" \
     https://carnap.io/api/v1/instructors/litmanhuang@gmail.com/documents/9110/data
 
 # push to mockTable.js 

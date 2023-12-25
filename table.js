@@ -3,6 +3,8 @@
 // IO excel input attendance 
 // grant retake tokens
 
+
+
 let studentCarnapList = [];
 
 function studentCarnap (id, email, firstName, lastName, challenge1, challenge2,challenge3, challenge4, challenge5, challenge6, challenge7, challenge8, challenge9, challenge10, challenge11, challenge12, attendance){
@@ -25,153 +27,29 @@ function studentCarnap (id, email, firstName, lastName, challenge1, challenge2,c
     this.attendance = attendance;
 }
 
-async function fetchCarnapStudentData() {
-    let myCourse = "Tartu%20-%20Introduction%20to%20Logic%20(Eng)";
-    let instructor = "litmanhuang@gmail.com";
-    let apiKey = "bDIGolpQe4yzzxOUmqBej_VPrep7Vf7vOsyz39cb6ztJ";
+const myCourse = localStorage.getItem('myCourse');
+const instructor = localStorage.getItem('instructor');
+const apiKey =localStorage.getItem('apiKey');
+
+async function fetchCarnapStudentData(course, instructor, apiSecret) {
 
     const requestOptions = {
         method: 'GET',
         mode: 'cors',
         headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": apiKey
+            "X-API-KEY": apiSecret
         }
     };
 
     try {
-        const response = await fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses/${myCourse}/students`, requestOptions);
+        const response = await fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses/${course}/students`, requestOptions);
         const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error fetching data:', error);
         return []; // Return an empty array in case of an error
     }
-
-    // let mockStudentData =[
-    //     {
-    //       "email": "groundworker@gmail.com",
-    //       "lastName": "Kant",
-    //       "universityId": null,
-    //       "userId": 1231,
-    //       "firstName": "Immanuel",
-    //       "isAdmin": false,
-    //       "id": 1313,
-    //       "enrolledIn": 141,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "thinker@gmail.com",
-    //       "lastName": "Descartes",
-    //       "universityId": null,
-    //       "userId": 1232,
-    //       "firstName": "Rene",
-    //       "isAdmin": false,
-    //       "id": 1314,
-    //       "enrolledIn": 141,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "scientist@gmail.com",
-    //       "lastName": "Einstein",
-    //       "universityId": null,
-    //       "userId": 1233,
-    //       "firstName": "Albert",
-    //       "isAdmin": false,
-    //       "id": 1315,
-    //       "enrolledIn": 142,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "poet@gmail.com",
-    //       "lastName": "Shakespeare",
-    //       "universityId": null,
-    //       "userId": 1234,
-    //       "firstName": "William",
-    //       "isAdmin": false,
-    //       "id": 1316,
-    //       "enrolledIn": 142,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "philosopher@gmail.com",
-    //       "lastName": "Nietzsche",
-    //       "universityId": null,
-    //       "userId": 1235,
-    //       "firstName": "Friedrich",
-    //       "isAdmin": false,
-    //       "id": 1317,
-    //       "enrolledIn": 143,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "artist@gmail.com",
-    //       "lastName": "Da Vinci",
-    //       "universityId": null,
-    //       "userId": 1236,
-    //       "firstName": "Leonardo",
-    //       "isAdmin": false,
-    //       "id": 1318,
-    //       "enrolledIn": 143,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "musician@gmail.com",
-    //       "lastName": "Beethoven",
-    //       "universityId": null,
-    //       "userId": 1237,
-    //       "firstName": "Ludwig",
-    //       "isAdmin": false,
-    //       "id": 1319,
-    //       "enrolledIn": 144,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "writer@gmail.com",
-    //       "lastName": "Tolstoy",
-    //       "universityId": null,
-    //       "userId": 1238,
-    //       "firstName": "Leo",
-    //       "isAdmin": false,
-    //       "id": 1320,
-    //       "enrolledIn": 144,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "architect@gmail.com",
-    //       "lastName": "Frank Lloyd Wright",
-    //       "universityId": null,
-    //       "userId": 1239,
-    //       "firstName": "Frank",
-    //       "isAdmin": false,
-    //       "id": 1321,
-    //       "enrolledIn": 145,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     },
-    //     {
-    //       "email": "athlete@gmail.com",
-    //       "lastName": "Bolt",
-    //       "universityId": null,
-    //       "userId": 1240,
-    //       "firstName": "Usain",
-    //       "isAdmin": false,
-    //       "id": 1322,
-    //       "enrolledIn": 145,
-    //       "instructorId": null,
-    //       "isLti": false
-    //     }
-    //   ]      
-
-    // return mockStudentData
 }
 
 async function getStudentAttendence (id){
@@ -216,43 +94,52 @@ async function getStudentAttendence (id){
    return attendance;
 }
 
-async function createStudentProgress() {
-    // table will be generated to display student data
+const main = document.getElementById("main")
+
+const attendanceInput = document.createElement('input');
+attendanceInput.type = 'file';
+attendanceInput.id = 'attendanceInput';
+
+main.appendChild(attendanceInput);
+
+attendanceInput.addEventListener('change', handleAttendanceFile);
+
+async function handleAttendanceFile(event) {
+    const file = event.target.files[0];
 
     try {
-        const data = await fetchCarnapStudentData();
-        console.log(data)
+        const attendance = await readJSONFile(file);
+        console.log('Attendance data:', attendance);
 
-        for (let i = 0; i < data.length; i++) {
-           let assignmentData = await fetchAssignmentData(data[i].id)
-        // let assignmentData = mockFetchAssignmentData()
-           console.log("assignment data:" + " student id =" + data[i].id +" name =" + data[i].firstName + " "+ data[i].lastName)
-            console.log(assignmentData)
-
-            // const attendance = await find student attendance (data[i].id()
-
-            let attendance = await getStudentAttendence(data[i].id);
-            console.log(attendance);
-            
-            let challengeData = await findChallengeResult(assignmentData, attendance);
-
-            let student = new studentCarnap(data[i].id, data[i].email, data[i].firstName, data[i].lastName, challengeData[0], challengeData[1],challengeData[2], challengeData[3], challengeData[4], challengeData[5], challengeData[6], challengeData[7], challengeData[8], challengeData[9], challengeData[10], challengeData[11], attendance);
-
-            studentCarnapList.push(student);
-
-
-            console.log("challenge data:" + " student id =" + data[i].id +" name =" + data[i].firstName + " "+ data[i].lastName)
-            console.log(challengeData)
-        }
-        generateTable(studentCarnapList);
-        generateAndPopulateAttendanceTable(studentCarnapList);
-
+        // Call the main function with the attendance data
+        await createStudentProgress(attendance);
     } catch (error) {
-        console.error('Error creating student list:', error);
+        console.error('Error reading JSON file:', error);
     }
 }
 
-const main = document.getElementById("main")
+async function readJSONFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            try {
+                const result = event.target.result;
+                const attendanceData = JSON.parse(result);
+
+                resolve(attendanceData);
+            } catch (error) {
+                reject(error);
+            }
+        };
+
+        reader.onerror = (error) => {
+            reject(error);
+        };
+
+        reader.readAsText(file);
+    });
+}
 
 function generateTable(data){
     const heading = document.createElement("h1")
@@ -432,22 +319,19 @@ function generateAttendanceTable(students) {
 }
 
 
-async function fetchAssignmentData(studentId) {
-    let myCourse = "Tartu%20-%20Introduction%20to%20Logic%20(Eng)";
-    let instructor = "litmanhuang@gmail.com";
-    let apiKey = "bDIGolpQe4yzzxOUmqBej_VPrep7Vf7vOsyz39cb6ztJ";
+async function fetchAssignmentData(studentId, course, instructor, apiSecret) {
 
     const requestOptions = {
         method: 'GET',
         mode: 'cors',
         headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": apiKey
+            "X-API-KEY": apiSecret
         }
     };
 
     try {
-        const response = await fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses/${myCourse}/students/${studentId}/submissions`, requestOptions);
+        const response = await fetch(`https://carnap.io/api/v1/instructors/${instructor}/courses/${course}/students/${studentId}/submissions`, requestOptions);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -457,41 +341,42 @@ async function fetchAssignmentData(studentId) {
 } 
 
 // validate dates
+
 const validDates = [
     {
         name: "2023-09-28: 1500",
-        startTime: new Date("2023-09-28T15:00:00Z"),
-        endTime: new Date("2023-09-28T16:00:00Z"),
+        startTime: "2023-09-28T15:00:00Z",
+        endTime: "2023-09-28T16:00:00Z",
         presence: false
     }, 
     {
         name: "2023-09-21: 1500",
-        startTime: new Date("2023-09-21T15:00:00Z"),
-        endTime: new Date("2023-09-21T16:00:00Z"),
+        startTime: "2023-09-21T15:00:00Z",
+        endTime: "2023-09-21T16:00:00Z",
         presence: false
     },
     {
         name: "2023-10-05: 1500",
-        startTime: new Date("2023-10-05T15:00:00Z"),
-        endTime: new Date("2023-10-05T16:00:00Z"),
+        startTime: "2023-10-05T15:00:00Z",
+        endTime: "2023-10-05T16:00:00Z",
         presence: false
     },
     {
         name: "2023-10-12: 1500",
-        startTime: new Date("2023-10-12T15:00:00Z"),
-        endTime: new Date("2023-10-12T16:00:00Z"),
+        startTime: "2023-10-12T15:00:00Z",
+        endTime: "2023-10-12T16:00:00Z",
         presence: false
     },    
     {
         name: "2023-10-19: 1500",
-        startTime: new Date("2023-10-19T15:00:00Z"),
-        endTime: new Date("2023-10-19T16:00:00Z"),
+        startTime: "2023-10-19T15:00:00Z",
+        endTime: "2023-10-19T16:00:00Z",
         presence: false
     },
     {
         name: "2023-10-26: 1500",
-        startTime: new Date("2023-10-26T15:00:00Z"),
-        endTime: new Date("2023-10-26T16:00:00Z"),
+        startTime: "2023-10-26T15:00:00Z",
+        endTime: "2023-10-26T16:00:00Z",
         presence: false
     }
     ]
@@ -509,255 +394,16 @@ function dateIsValid (accessDate, validDates, attendance){
         return date;
     });
     console.log(presenceDates);
-        return presenceDates.some((date)=> date.presence && accessDate >= date.startTime && accessDate <= date.endTime);
+        return presenceDates.some((date)=> date.presence && accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
 }
 
-
-
-// function mockFetchAssignmentData (){
-//    let mockAssignmentData = [
-//         {
-//           "problemSubmissionAssignmentId": 3001,
-//           "problemSubmissionCorrect": false,
-//           "problemSubmissionData": {
-//             "type": "Qualitative",
-//             "data": "Qualitative data for problem 3001"
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3001}}"
-//           },
-//           "problemSubmissionCredit": 3,
-//           "problemSubmissionIdent": "Exercise-24",
-//           "problemSubmissionUserId": 10385,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Qualitative",
-//           "problemSubmissionTime": "2021-04-26T19:14:06.563900857Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3002,
-//           "problemSubmissionCorrect": true,
-//           "problemSubmissionData": {
-//             "type": "Quantitative",
-//             "data": [4, 8, 15, 16, 23, 42]
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3002}}"
-//           },
-//           "problemSubmissionCredit": 5,
-//           "problemSubmissionIdent": "Exercise-25",
-//           "problemSubmissionUserId": 10386,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Quantitative",
-//           "problemSubmissionTime": "2021-04-26T19:22:15.225671364Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3003,
-//           "problemSubmissionCorrect": true,
-//           "problemSubmissionData": {
-//             "type": "Essay",
-//             "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3003}}"
-//           },
-//           "problemSubmissionCredit": 4,
-//           "problemSubmissionIdent": "Exercise-26",
-//           "problemSubmissionUserId": 10387,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Essay",
-//           "problemSubmissionTime": "2021-04-26T19:30:51.156738244Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3004,
-//           "problemSubmissionCorrect": false,
-//           "problemSubmissionData": {
-//             "type": "Qualitative",
-//             "data": "Qualitative data for problem 3004"
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3004}}"
-//           },
-//           "problemSubmissionCredit": 2,
-//           "problemSubmissionIdent": "Exercise-27",
-//           "problemSubmissionUserId": 10388,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Qualitative",
-//           "problemSubmissionTime": "2021-04-26T19:42:19.076252398Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3005,
-//           "problemSubmissionCorrect": true,
-//           "problemSubmissionData": {
-//             "type": "MultipleChoice",
-//             "data": {
-//               "question": "What is the capital of France?",
-//               "options": ["London", "Paris", "Berlin", "Rome"],
-//               "answer": "Paris"
-//             }
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3005}}"
-//           },
-//           "problemSubmissionCredit": 5,
-//           "problemSubmissionIdent": "Exercise-28",
-//           "problemSubmissionUserId": 10389,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "MultipleChoice",
-//           "problemSubmissionTime": "2021-04-26T19:55:33.822950506Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3006,
-//           "problemSubmissionCorrect": false,
-//           "problemSubmissionData": {
-//             "type": "Qualitative",
-//             "data": "Qualitative data for problem 3006"
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3006}}"
-//           },
-//           "problemSubmissionCredit": 1,
-//           "problemSubmissionIdent": "Exercise-29",
-//           "problemSubmissionUserId": 10390,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Qualitative",
-//           "problemSubmissionTime": "2021-04-26T20:02:40.712845943Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3007,
-//           "problemSubmissionCorrect": true,
-//           "problemSubmissionData": {
-//             "type": "Quantitative",
-//             "data": [3, 6, 9, 12, 15, 18]
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3007}}"
-//           },
-//           "problemSubmissionCredit": 4,
-//           "problemSubmissionIdent": "Exercise-30",
-//           "problemSubmissionUserId": 10391,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Quantitative",
-//           "problemSubmissionTime": "2021-04-26T20:12:55.951088012Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3008,
-//           "problemSubmissionCorrect": false,
-//           "problemSubmissionData": {
-//             "type": "Essay",
-//             "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3008}}"
-//           },
-//           "problemSubmissionCredit": 2,
-//           "problemSubmissionIdent": "Exercise-31",
-//           "problemSubmissionUserId": 10392,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Essay",
-//           "problemSubmissionTime": "2021-04-26T20:24:01.810602213Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3009,
-//           "problemSubmissionCorrect": true,
-//           "problemSubmissionData": {
-//             "type": "MultipleChoice",
-//             "data": {
-//               "question": "Which planet is closest to the Sun?",
-//               "options": ["Earth", "Mars", "Mercury", "Venus"],
-//               "answer": "Mercury"
-//             }
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3009}}"
-//           },
-//           "problemSubmissionCredit": 5,
-//           "problemSubmissionIdent": "Exercise-32",
-//           "problemSubmissionUserId": 10393,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "MultipleChoice",
-//           "problemSubmissionTime": "2021-04-26T20:34:33.457049624Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//           "problemSubmissionAssignmentId": 3010,
-//           "problemSubmissionCorrect": false,
-//           "problemSubmissionData": {
-//             "type": "Qualitative",
-//             "data": "Qualitative data for problem 3010"
-//           },
-//           "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3010}}"
-//           },
-//           "problemSubmissionCredit": 3,
-//           "problemSubmissionIdent": "Exercise-33",
-//           "problemSubmissionUserId": 10394,
-//           "problemSubmissionLateCredit": null,
-//           "problemSubmissionType": "Qualitative",
-//           "problemSubmissionTime": "2021-04-26T20:45:19.716015014Z",
-//           "problemSubmissionExtra": null
-//         },
-//         {
-//             "problemSubmissionAssignmentId": 3011,
-//             "problemSubmissionCorrect": true,
-//             "problemSubmissionData": {
-//             "type": "Quantitative",
-//             "data": [7, 14, 21, 28, 35, 42]
-//             },
-//             "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3011}}"
-//             },
-//             "problemSubmissionCredit": 4,
-//             "problemSubmissionIdent": "Exercise-34",
-//             "problemSubmissionUserId": 10395,
-//             "problemSubmissionLateCredit": null,
-//             "problemSubmissionType": "Quantitative",
-//             "problemSubmissionTime": "2021-04-26T20:56:30.964362101Z",
-//             "problemSubmissionExtra": null
-//         },
-//         {
-//             "problemSubmissionAssignmentId": 3012,
-//             "problemSubmissionCorrect": false,
-//             "problemSubmissionData": {
-//             "type": "Qualitative",
-//             "data": "Qualitative data for problem 3012"
-//             },
-//             "problemSubmissionSource": {
-//             "tag": "Assignment",
-//             "contents": "AssignmentMetadataKey {unAssignmentMetadataKey = SqlBackendKey {unSqlBackendKey = 3012}}"
-//             },
-//             "problemSubmissionCredit": 2,
-//             "problemSubmissionIdent": "Exercise-35",
-//             "problemSubmissionUserId": 10396,
-//             "problemSubmissionLateCredit": null,
-//             "problemSubmissionType": "Qualitative",
-//             "problemSubmissionTime": "2021-04-26T21:08:47.825550301Z",
-//             "problemSubmissionExtra": null
-//         }
-//       ]
-//       return mockAssignmentData
-// }
-
 // helper function to find challenges
-async function findChallengeResult (data, attendance){
+async function findChallengeResult (data, attendance, validDates){
+
+    // const storedValidDates = localStorage.getItem('validDates');
+    // const validDates = await JSON.parse(storedValidDates);
+
+
 
     let challengeData = Array(12).fill("no attempt")
 
@@ -765,9 +411,7 @@ async function findChallengeResult (data, attendance){
     for (let i = 0; i < data.length; i++) {
 
         let challenge = data[i].problemSubmissionAssignmentId
-        //manully find out which assignment is the relevant challenge 
         let correct = data[i].problemSubmissionCorrect
-
         let accessDate = new Date (data[i].problemSubmissionTime)
 
         switch (challenge) {
@@ -780,6 +424,7 @@ async function findChallengeResult (data, attendance){
                 }
 
                 if (correct && dateIsValid(accessDate, validDates, attendance)){
+                    console.log("attempted with point!!!!!!!");
                     challengeData[0] = challengeData [0] + 1
                 }
                 break;
@@ -915,5 +560,39 @@ async function findChallengeResult (data, attendance){
     return challengeData
 }
 
-createStudentProgress();
+//main
+(async function createStudentProgress() {
+
+    try {
+        const data = await fetchCarnapStudentData(myCourse, instructor, apiKey);
+        console.log(data)
+
+        for (let i = 0; i < data.length; i++) {
+            let studentCarnapData = data[i];
+
+            let assignmentData = await fetchAssignmentData(studentCarnapData.id, myCourse, instructor, apiKey)
+
+            console.log("assignment data:" + " student id =" + studentCarnapData.id +" name =" + studentCarnapData.firstName + " "+ studentCarnapData.lastName)
+            console.log(assignmentData)
+
+            let attendance = await getStudentAttendence(studentCarnapData.id);
+            console.log(attendance);
+            
+            let challengeData = await findChallengeResult(assignmentData, attendance, validDates);
+
+            let student = new studentCarnap(studentCarnapData.id, studentCarnapData.email, studentCarnapData.firstName, studentCarnapData.lastName, challengeData[0], challengeData[1],challengeData[2], challengeData[3], challengeData[4], challengeData[5], challengeData[6], challengeData[7], challengeData[8], challengeData[9], challengeData[10], challengeData[11], attendance);
+
+            studentCarnapList.push(student);
+
+
+            console.log("challenge data:" + " student id =" + studentCarnapData.id +" name =" + studentCarnapData.firstName + " "+ studentCarnapData.lastName)
+            console.log(challengeData)
+        }
+        generateTable(studentCarnapList);
+        generateAndPopulateAttendanceTable(studentCarnapList);
+
+    } catch (error) {
+        console.error('Error creating student list:', error);
+    }
+})();
 
