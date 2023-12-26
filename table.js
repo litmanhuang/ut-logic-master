@@ -30,6 +30,10 @@ function studentCarnap (id, email, firstName, lastName, challenge1, challenge2,c
 const myCourse = localStorage.getItem('myCourse');
 const instructor = localStorage.getItem('instructor');
 const apiKey =localStorage.getItem('apiKey');
+// const testStored = localStorage.getItem('testStoredLocal');
+// console.log(testStored);
+// const testJSON = JSON.parse(testStored);
+// console.log(testJSON);
 
 async function fetchCarnapStudentData(course, instructor, apiSecret) {
 
@@ -53,93 +57,81 @@ async function fetchCarnapStudentData(course, instructor, apiSecret) {
 }
 
 async function getStudentAttendence (id){
-    console.log(id);
+    const attendanceStored = localStorage.getItem('attendanceStoredLocal');
+    const attendance = JSON.parse(attendanceStored);
 
-    let attendance = [];
+    const student = attendance.find((student) => student.id === id);
 
-    switch (id){
-        //25486 Matej	Srajer
-        case 25486: 
-        break;
-        //25502	Oles	Sahan
-        case 25502: attendance.push("2023-09-21: 1500", "2023-09-28: 1500", "2023-10-05: 1500")
-        break;
-
-        //25540	Paulina	Vituščanka
-        case 25540: 
-        break;
-
-        //25541	Kadri	Roosmaa
-        case 25541: attendance.push("2023-09-21: 1500");
-        break;
-
-        //25543	Aleksander Amos	Nigesen
-        case 25543: 
-        break;
-
-        //25544	Sofja	Kissina
-        case 25544: 
-        break;
-
-        //25545	Maria	Rõhu
-        case 25545:
-        break;
-
-        default: attendance.push("");
-            break;
-   }
-
-   console.log(attendance);
-
-   return attendance;
-}
-
-const main = document.getElementById("main")
-
-const attendanceInput = document.createElement('input');
-attendanceInput.type = 'file';
-attendanceInput.id = 'attendanceInput';
-
-main.appendChild(attendanceInput);
-
-attendanceInput.addEventListener('change', handleAttendanceFile);
-
-async function handleAttendanceFile(event) {
-    const file = event.target.files[0];
-
-    try {
-        const attendance = await readJSONFile(file);
-        console.log('Attendance data:', attendance);
-
-        // Call the main function with the attendance data
-        await createStudentProgress(attendance);
-    } catch (error) {
-        console.error('Error reading JSON file:', error);
+    if (student) {
+        return student.attendance;
+    } else {
+        // Return an appropriate value when the student with the given id is not found
+        return [];
     }
 }
 
-async function readJSONFile(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+const main = document.getElementById("main");
+// const inputDiv = document.createElement("div");
 
-        reader.onload = (event) => {
-            try {
-                const result = event.target.result;
-                const attendanceData = JSON.parse(result);
+// const attendanceInputDiv = document.createElement("div");
+// attendanceInputDiv.textContent = "upload attendance file here";
 
-                resolve(attendanceData);
-            } catch (error) {
-                reject(error);
-            }
-        };
+// const challengeInputDiv = document.createElement("div");
+// challengeInputDiv.textContent = "upload challenge dates file here";
 
-        reader.onerror = (error) => {
-            reject(error);
-        };
+// main.appendChild(attendanceInputDiv);
+// main.appendChild(challengeInputDiv);
+// main.appendChild(inputDiv);
 
-        reader.readAsText(file);
-    });
-}
+// const attendanceInput = document.createElement('input');
+// attendanceInput.type = 'file';
+// attendanceInput.id = 'attendanceInput';
+
+// const challengeDateInput = document.createElement('input');
+// challengeDateInput.type = 'file';
+// challengeDateInput.id = 'challengeDateInput';
+
+// attendanceInputDiv.appendChild(attendanceInput);
+// challengeInputDiv.appendChild(challengeDateInput);
+
+// attendanceInput.addEventListener('change', handleAttendanceFile);
+
+// async function handleAttendanceFile(event) {
+//     const file = event.target.files[0];
+
+//     try {
+//         const attendance = await readJSONFile(file);
+//         console.log('Attendance data:', attendance);
+
+//         // Call the main function with the attendance data
+//         await createStudentProgress(attendance);
+//     } catch (error) {
+//         console.error('Error reading JSON file:', error);
+//     }
+// }
+
+// async function readJSONFile(file) {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+
+//         reader.onload = (event) => {
+//             try {
+//                 const result = event.target.result;
+//                 const attendanceData = JSON.parse(result);
+
+//                 resolve(attendanceData);
+//             } catch (error) {
+//                 reject(error);
+//             }
+//         };
+
+//         reader.onerror = (error) => {
+//             reject(error);
+//         };
+
+//         reader.readAsText(file);
+//     });
+// }
 
 function generateTable(data){
     const heading = document.createElement("h1")
@@ -250,6 +242,37 @@ function populateProgressTable (data, tbody){
 //     }
 // }
 
+function downloadFile(data, fileName, fileType) {
+    // Create a Blob from the data
+    const blob = new Blob([data], { type: fileType });
+
+    // Create a link element
+    const link = document.createElement('a');
+
+    // Set the href attribute with the Blob object
+    link.href = window.URL.createObjectURL(blob);
+
+    // Set the download attribute with the desired file name
+    link.download = fileName;
+
+    // Append the link to the document
+    document.body.appendChild(link);
+
+    // Trigger a click on the link to start the download
+    link.click();
+
+    // Remove the link from the document
+    document.body.removeChild(link);
+}
+
+// Example usage
+const exampleData = 'Hello, this is some content.';
+const exampleFileName = 'example.txt';
+const exampleFileType = 'text/plain';
+
+
+
+
 function generateAndPopulateAttendanceTable(students) {
     // Generate the attendance table HTML
     const attendanceTableHTML = generateAttendanceTable(students);
@@ -341,50 +364,13 @@ async function fetchAssignmentData(studentId, course, instructor, apiSecret) {
 } 
 
 // validate dates
+const validatesStored = localStorage.getItem('challengeDatesStoredLocal');
+const validDates = JSON.parse(validatesStored);
 
-const validDates = [
-    {
-        name: "2023-09-28: 1500",
-        startTime: "2023-09-28T15:00:00Z",
-        endTime: "2023-09-28T16:00:00Z",
-        presence: false
-    }, 
-    {
-        name: "2023-09-21: 1500",
-        startTime: "2023-09-21T15:00:00Z",
-        endTime: "2023-09-21T16:00:00Z",
-        presence: false
-    },
-    {
-        name: "2023-10-05: 1500",
-        startTime: "2023-10-05T15:00:00Z",
-        endTime: "2023-10-05T16:00:00Z",
-        presence: false
-    },
-    {
-        name: "2023-10-12: 1500",
-        startTime: "2023-10-12T15:00:00Z",
-        endTime: "2023-10-12T16:00:00Z",
-        presence: false
-    },    
-    {
-        name: "2023-10-19: 1500",
-        startTime: "2023-10-19T15:00:00Z",
-        endTime: "2023-10-19T16:00:00Z",
-        presence: false
-    },
-    {
-        name: "2023-10-26: 1500",
-        startTime: "2023-10-26T15:00:00Z",
-        endTime: "2023-10-26T16:00:00Z",
-        presence: false
-    }
-    ]
 
 function dateIsValid (accessDate, validDates, attendance){
 
-    // attendance = ["2023-09-21: 1500", "2023-09-28: 1500", "2023-10-05: 1500"]
-
+    //check if the student is present on a challenge date
     let presenceDates = validDates.map((date)=> {
         if (attendance.includes(date.name)){
             date.presence = true;
@@ -394,16 +380,13 @@ function dateIsValid (accessDate, validDates, attendance){
         return date;
     });
     console.log(presenceDates);
-        return presenceDates.some((date)=> date.presence && accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+    // return only those whose access date is with in the start and end time
+    //potential reuse for cheating report
+    return presenceDates.some((date)=> date.presence && accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
 }
 
 // helper function to find challenges
 async function findChallengeResult (data, attendance, validDates){
-
-    // const storedValidDates = localStorage.getItem('validDates');
-    // const validDates = await JSON.parse(storedValidDates);
-
-
 
     let challengeData = Array(12).fill("no attempt")
 
@@ -595,4 +578,5 @@ async function findChallengeResult (data, attendance, validDates){
         console.error('Error creating student list:', error);
     }
 })();
+// downloadFile(exampleData, exampleFileName, exampleFileType);
 
