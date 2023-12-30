@@ -2,7 +2,11 @@
 // catch cheating
 // IO excel input attendance 
 // grant retake tokens
+let courseUTLogicList =[];
 
+function studentUTLogic (courseId, courseName, courseDate){
+
+}
 
 
 let studentCarnapList = [];
@@ -740,9 +744,74 @@ async function catchCrime(id, firstName, lastName, assignments, validDates){
     return crimeReport;
 }
 
+function generateAndPopulateCrimeReportTable(crimeReports) {
+    // Generate the crime report table HTML
+    const crimeReportTableHTML = generateCrimeReportTable(crimeReports);
+
+    // Get the main element
+    const main = document.getElementById("main");
+
+    // Create a heading for the crime report table
+    const heading = document.createElement("h1");
+    heading.innerHTML = "Cheat Report";
+    main.appendChild(heading);
+
+    // Create a div to hold the crime report table
+    const tableContainer = document.createElement("div");
+    tableContainer.id = "crimeReportTable";
+    tableContainer.className = "table table-striped";
+    main.appendChild(tableContainer);
+
+    // Insert the crime report table HTML into the div
+    tableContainer.innerHTML = crimeReportTableHTML;
+}
+
+function generateCrimeReportTable(crimeReports) {
+    // Get a list of unique challenge numbers
+    const uniqueChallenges = [...new Set(crimeReports.flatMap(report => report.reports.map(challenge => Object.keys(challenge)[0])))];
+    console.log(uniqueChallenges);
+
+    // Create the table headers (challenges)
+    const tableHeaders = ['ID', 'First Name', 'Last Name', ...uniqueChallenges.map(challenge => challenge)];
+
+    // Create the table rows
+    const tableRows = crimeReports.map(crimeReport => {
+        const rowData = [];
+        rowData.push(crimeReport.id, crimeReport.firstName, crimeReport.lastName);
+
+        uniqueChallenges.forEach(challenge => {
+            const challengeData = crimeReport.reports.find(report => Object.keys(report)[0] === challenge);
+            rowData.push(challengeData ? challengeData[challenge] : '');
+        });
+
+        return rowData;
+    });
+
+    // Generate the table HTML
+    const tableHTML = `
+        <table>
+            <thead>
+                <tr>
+                    ${tableHeaders.map(header => `<th>${header}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>
+                ${tableRows.map(row => `
+                    <tr>
+                        ${row.map(data => `<td>${data}</td>`).join('')}
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+
+    return tableHTML;
+}
+
 //main
 (async function createStudentProgress() {
 
+    let crimeReports = [];
     try {
         const data = await fetchCarnapStudentData(myCourse, instructor, apiKey);
         console.log(data)
@@ -759,20 +828,20 @@ async function catchCrime(id, firstName, lastName, assignments, validDates){
             console.log(attendance);
 
             let studentCrimeReport = await catchCrime (studentCarnapData.id, studentCarnapData.firstName, studentCarnapData.lastName, assignmentData, validDates);
-            console.log(studentCrimeReport);
+            crimeReports.push(studentCrimeReport);
             let challengeData = await findChallengeResult(assignmentData, attendance, validDates);
 
             let student = new studentCarnap(studentCarnapData.id, studentCarnapData.email, studentCarnapData.firstName, studentCarnapData.lastName, challengeData[0], challengeData[1],challengeData[2], challengeData[3], challengeData[4], challengeData[5], challengeData[6], challengeData[7], challengeData[8], challengeData[9], challengeData[10], challengeData[11], attendance);
 
             studentCarnapList.push(student);
 
-
             console.log("challenge data:" + " student id =" + studentCarnapData.id +" name =" + studentCarnapData.firstName + " "+ studentCarnapData.lastName)
             console.log(challengeData)
         }
+        console.log(crimeReports);
         generateTable(studentCarnapList);
         generateAndPopulateAttendanceTable(studentCarnapList);
-
+        generateAndPopulateCrimeReportTable(crimeReports);
     } catch (error) {
         console.error('Error creating student list:', error);
     }
