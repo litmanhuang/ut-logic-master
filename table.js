@@ -32,6 +32,13 @@ const myCourse = localStorage.getItem('myCourse');
 const myCourse2 = localStorage.getItem('myCourse2');
 const instructor = localStorage.getItem('instructor');
 const apiKey =localStorage.getItem('apiKey');
+
+const validatesStored = localStorage.getItem('challengeDatesStoredLocal');
+const attendanceStored = localStorage.getItem('attendanceStoredLocal');
+
+const validatesStored2 = localStorage.getItem('challengeDatesStoredLocal2');
+const attendanceStored2 = localStorage.getItem('attendanceStoredLocal2');
+
 // const testStored = localStorage.getItem('testStoredLocal');
 // console.log(testStored);
 // const testJSON = JSON.parse(testStored);
@@ -58,11 +65,9 @@ async function fetchCarnapStudentData(course, instructor, apiSecret) {
     }
 }
 
-async function getStudentAttendence (id){
-    const attendanceStored = localStorage.getItem('attendanceStoredLocal');
-    const attendance = JSON.parse(attendanceStored);
-
-    const student = attendance.find((student) => student.id === id);
+async function getStudentAttendence (id, attendanceInputs){
+    const student = attendanceInputs.find((student) => student.id === id);
+    console.log(student);
 
     if (student) {
         return student.attendance;
@@ -365,11 +370,6 @@ async function fetchAssignmentData(studentId, course, instructor, apiSecret) {
     }
 } 
 
-// validate dates
-const validatesStored = localStorage.getItem('challengeDatesStoredLocal');
-const validDates = JSON.parse(validatesStored);
-
-
 function dateIsValid (accessDate, validDates, attendance){
 
     //check if the student is present on a challenge date
@@ -405,7 +405,7 @@ function attemptIsValid (accessDate, validDates, attendance){
 }
 
 // helper function to find challenges
-async function findChallengeResult (data, attendance, validDates){
+async function findChallengeResult (data, attendance, validDatesInput){
 
     let challengeData = Array(12).fill("no attempt")
 
@@ -420,12 +420,12 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 1 id = 6205
             case 6205:
             // case 3001:
-                if (correct !== null && challengeData[0]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+                if (correct !== null && challengeData[0]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                     //problem, need to check attendance before checking attempts
                     challengeData[0] = 0;
                 }
 
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                     challengeData[0] = challengeData [0] + 1
                 }
                 break;
@@ -433,10 +433,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 2 id = 6204
             case 6204:
             // case 3002:
-            if (correct !== null && challengeData[1]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[1]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[1] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[1] = challengeData [1] + 1
                 }
                 break;
@@ -444,10 +444,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 3 id = 6206
             case 6206:
             // case 3003:
-            if (correct !== null && challengeData[2]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[2]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[2] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[2] = challengeData [2] + 1
                 }
                 break;
@@ -455,10 +455,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 4 id = 6207
             case 6207:
             // case 3004:
-            if (correct !== null && challengeData[3]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[3]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[3] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[3] = challengeData [3] + 1
                 }
                 break;
@@ -466,10 +466,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 5 id = 6208
             case 6208:
             // case 3005:
-            if (correct !== null && challengeData[4]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[4]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[4] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[4] = challengeData [4] + 1
                 }
                 break;
@@ -477,10 +477,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 6 id = 6209
             case 6209:
             // case 3006:
-            if (correct !== null && challengeData[5]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[5]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[5] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[5] = challengeData [5] + 1
                 }
                 break;
@@ -488,10 +488,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 7 id = 6210
             case 6210:
             // case 3007:
-            if (correct !== null && challengeData[6]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[6]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[6] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[6] = challengeData [6] + 1
                 }
                 break;
@@ -499,10 +499,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 8 id = 6211
             case 6211:
             // case 3008:
-            if (correct !== null && challengeData[7]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[7]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[7] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[7] = challengeData [7] + 1
                 }
                 break;
@@ -510,10 +510,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 9 id = 6212
             case 6212:
             // case 3009:
-                if (correct !== null && challengeData[8]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+                if (correct !== null && challengeData[8]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                     challengeData[8] = 0;
                 }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[8] = challengeData [8] + 1
                 }
                 break;
@@ -521,10 +521,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 10 id = 6213
             case 6213:
             // case 3010:
-            if (correct !== null && challengeData[9]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[9]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[9] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[9] = challengeData [9] + 1
                 }
                 break;
@@ -533,10 +533,10 @@ async function findChallengeResult (data, attendance, validDates){
             case 6214:
             // case 3011:
 
-            if (correct !== null && challengeData[10]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[10]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[10] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[10] = challengeData [10] + 1
                 }
                 break;
@@ -544,10 +544,10 @@ async function findChallengeResult (data, attendance, validDates){
             // challenge 12 id = 6215
             case 6215:
             // case 3012:
-            if (correct !== null && challengeData[11]=="no attempt" && dateIsValid(accessDate, validDates, attendance)){
+            if (correct !== null && challengeData[11]=="no attempt" && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[11] = 0;
             }
-                if (correct && dateIsValid(accessDate, validDates, attendance)){
+                if (correct && dateIsValid(accessDate, validDatesInput, attendance)){
                 challengeData[11] = challengeData [11] + 1
                 }
                 break;
@@ -562,7 +562,6 @@ async function findChallengeResult (data, attendance, validDates){
 }
 
 async function catchCrime(id, firstName, lastName, assignments, validDates){
-
     let crimeReport = {
         id: id, 
         firstName: firstName, 
@@ -607,6 +606,7 @@ async function catchCrime(id, firstName, lastName, assignments, validDates){
             // challenge 2 id = 6204
             case 6204:
             // case 3002:
+            console.log(validDates);
             let isCrimeChallenge2 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
             if (isCrimeChallenge2){
                  const crimeDate = accessDate.toString();
@@ -807,28 +807,31 @@ function generateCrimeReportTable(crimeReports) {
 }
 
 //main
-async function createStudentProgress(course) {
+async function createStudentProgress(courseInput, attendanceInput, validDatesInput) {
+    const attendanceParsed = JSON.parse(attendanceInput);
+    const validDatesInputParsed = JSON.parse(validDatesInput);
+
     let studentCarnapList = [];
 
     let crimeReports = [];
     try {
-        const data = await fetchCarnapStudentData(course, instructor, apiKey);
+        const data = await fetchCarnapStudentData(courseInput, instructor, apiKey);
         console.log(data)
 
         for (let i = 0; i < data.length; i++) {
             let studentCarnapData = data[i];
 
-            let assignmentData = await fetchAssignmentData(studentCarnapData.id, course, instructor, apiKey)
+            let assignmentData = await fetchAssignmentData(studentCarnapData.id, courseInput, instructor, apiKey)
 
             console.log("assignment data:" + " student id =" + studentCarnapData.id +" name =" + studentCarnapData.firstName + " "+ studentCarnapData.lastName)
             console.log(assignmentData)
 
-            let attendance = await getStudentAttendence(studentCarnapData.id);
+            let attendance = await getStudentAttendence(studentCarnapData.id, attendanceParsed);
             console.log(attendance);
 
-            let studentCrimeReport = await catchCrime (studentCarnapData.id, studentCarnapData.firstName, studentCarnapData.lastName, assignmentData, validDates);
+            let studentCrimeReport = await catchCrime (studentCarnapData.id, studentCarnapData.firstName, studentCarnapData.lastName, assignmentData, validDatesInputParsed);
             crimeReports.push(studentCrimeReport);
-            let challengeData = await findChallengeResult(assignmentData, attendance, validDates);
+            let challengeData = await findChallengeResult(assignmentData, attendance, validDatesInputParsed);
 
             let student = new studentCarnap(studentCarnapData.id, studentCarnapData.email, studentCarnapData.firstName, studentCarnapData.lastName, challengeData[0], challengeData[1],challengeData[2], challengeData[3], challengeData[4], challengeData[5], challengeData[6], challengeData[7], challengeData[8], challengeData[9], challengeData[10], challengeData[11], attendance);
 
@@ -846,7 +849,7 @@ async function createStudentProgress(course) {
     }
 };
 
-createStudentProgress(myCourse);
-createStudentProgress(myCourse2);
+createStudentProgress(myCourse, attendanceStored, validatesStored);
+createStudentProgress(myCourse2, attendanceStored2, validatesStored2);
 // downloadFile(exampleData, exampleFileName, exampleFileType);
 
