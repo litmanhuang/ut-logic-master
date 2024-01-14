@@ -8,9 +8,6 @@ function studentUTLogic (courseId, courseName, courseDate){
 
 }
 
-
-let studentCarnapList = [];
-
 function studentCarnap (id, email, firstName, lastName, challenge1, challenge2,challenge3, challenge4, challenge5, challenge6, challenge7, challenge8, challenge9, challenge10, challenge11, challenge12, attendance){
     this.id = id;
     this.email = email;
@@ -32,6 +29,7 @@ function studentCarnap (id, email, firstName, lastName, challenge1, challenge2,c
 }
 
 const myCourse = localStorage.getItem('myCourse');
+const myCourse2 = localStorage.getItem('myCourse2');
 const instructor = localStorage.getItem('instructor');
 const apiKey =localStorage.getItem('apiKey');
 // const testStored = localStorage.getItem('testStoredLocal');
@@ -809,17 +807,18 @@ function generateCrimeReportTable(crimeReports) {
 }
 
 //main
-(async function createStudentProgress() {
+async function createStudentProgress(course) {
+    let studentCarnapList = [];
 
     let crimeReports = [];
     try {
-        const data = await fetchCarnapStudentData(myCourse, instructor, apiKey);
+        const data = await fetchCarnapStudentData(course, instructor, apiKey);
         console.log(data)
 
         for (let i = 0; i < data.length; i++) {
             let studentCarnapData = data[i];
 
-            let assignmentData = await fetchAssignmentData(studentCarnapData.id, myCourse, instructor, apiKey)
+            let assignmentData = await fetchAssignmentData(studentCarnapData.id, course, instructor, apiKey)
 
             console.log("assignment data:" + " student id =" + studentCarnapData.id +" name =" + studentCarnapData.firstName + " "+ studentCarnapData.lastName)
             console.log(assignmentData)
@@ -845,6 +844,9 @@ function generateCrimeReportTable(crimeReports) {
     } catch (error) {
         console.error('Error creating student list:', error);
     }
-})();
+};
+
+createStudentProgress(myCourse);
+createStudentProgress(myCourse2);
 // downloadFile(exampleData, exampleFileName, exampleFileType);
 
