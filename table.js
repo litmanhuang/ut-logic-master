@@ -68,6 +68,7 @@ const challengeIds2 = [
     { challenge12: 6177 }
 ];
 
+const main = document.getElementById("main");
 
 async function fetchCarnapStudentData(course, instructor, apiSecret) {
 
@@ -101,8 +102,6 @@ async function getStudentAttendence (id, attendanceInputs){
         return [];
     }
 }
-
-const main = document.getElementById("main");
 
 function generateTable(data){
     const heading = document.createElement("h1")
@@ -157,37 +156,6 @@ function populateProgressTable (data, tbody){
         tbody.innerHTML+=row
     }
 }
-
-function downloadFile(data, fileName, fileType) {
-    // Create a Blob from the data
-    const blob = new Blob([data], { type: fileType });
-
-    // Create a link element
-    const link = document.createElement('a');
-
-    // Set the href attribute with the Blob object
-    link.href = window.URL.createObjectURL(blob);
-
-    // Set the download attribute with the desired file name
-    link.download = fileName;
-
-    // Append the link to the document
-    document.body.appendChild(link);
-
-    // Trigger a click on the link to start the download
-    link.click();
-
-    // Remove the link from the document
-    document.body.removeChild(link);
-}
-
-// Example usage
-const exampleData = 'Hello, this is some content.';
-const exampleFileName = 'example.txt';
-const exampleFileType = 'text/plain';
-
-
-
 
 function generateAndPopulateAttendanceTable(students) {
     // Generate the attendance table HTML
@@ -485,5 +453,4 @@ async function createStudentProgress(courseInput, attendanceInput, validDatesInp
 
 createStudentProgress(myCourse, attendanceStored, validatesStored, challengeIds);
 createStudentProgress(myCourse2, attendanceStored2, validatesStored, challengeIds2);
-// downloadFile(exampleData, exampleFileName, exampleFileType);
 
