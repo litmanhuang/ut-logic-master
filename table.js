@@ -70,6 +70,10 @@ const challengeIds2 = [
 
 const main = document.getElementById("main");
 
+createStudentProgress(myCourse, attendanceStored, validatesStored, challengeIds);
+createStudentProgress(myCourse2, attendanceStored2, validatesStored, challengeIds2);
+
+//helper functions
 async function fetchCarnapStudentData(course, instructor, apiSecret) {
 
     const requestOptions = {
@@ -158,24 +162,16 @@ function populateProgressTable (data, tbody){
 }
 
 function generateAndPopulateAttendanceTable(students) {
-    // Generate the attendance table HTML
     const attendanceTableHTML = generateAttendanceTable(students);
-
-    // Get the main element
     const main = document.getElementById("main");
-
-    // Create a heading for the attendance table
     const heading = document.createElement("h1");
     heading.innerHTML = "Student Attendance";
     main.appendChild(heading);
 
-    // Create a div to hold the attendance table
     const tableContainer = document.createElement("div");
     tableContainer.id = "attendanceTable";
     tableContainer.className = "table table-striped";
     main.appendChild(tableContainer);
-
-    // Insert the attendance table HTML into the div
     tableContainer.innerHTML = attendanceTableHTML;
 }
 
@@ -243,7 +239,7 @@ async function fetchAssignmentData(studentId, course, instructor, apiSecret) {
         return data;
     } catch (error) {
         console.error('Error fetching data:', error);
-        return []; // Return an empty array in case of an error
+        return []; 
     }
 } 
 
@@ -281,8 +277,6 @@ function attemptIsValid (accessDate, validDates, attendance){
     return presenceDates.some((date)=> date.presence && accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
 }
 
-// helper function to find challenges
-
 async function findChallengeResult(data, attendance, validDatesInput, challengeIds) {
 
     const challengeIdArray = challengeIds.reduce((accumulator, currentObject) => accumulator.concat(Object.values(currentObject)), []);
@@ -310,7 +304,6 @@ async function findChallengeResult(data, attendance, validDatesInput, challengeI
     challengeData = challengeData.map(number => number.toString());
     return challengeData;
 }
-
 
 async function catchCrime(id, firstName, lastName, assignments, validDates, challengeIds) {
     let crimeReport = {
@@ -345,33 +338,25 @@ async function catchCrime(id, firstName, lastName, assignments, validDates, chal
 }
 
 function generateAndPopulateCrimeReportTable(crimeReports) {
-    // Generate the crime report table HTML
     const crimeReportTableHTML = generateCrimeReportTable(crimeReports);
-
-    // Get the main element
     const main = document.getElementById("main");
 
-    // Create a heading for the crime report table
     const heading = document.createElement("h1");
     heading.innerHTML = "Cheat Report";
     main.appendChild(heading);
 
-    // Create a div to hold the crime report table
     const tableContainer = document.createElement("div");
     tableContainer.id = "crimeReportTable";
     tableContainer.className = "table table-striped";
     main.appendChild(tableContainer);
 
-    // Insert the crime report table HTML into the div
     tableContainer.innerHTML = crimeReportTableHTML;
 }
 
 function generateCrimeReportTable(crimeReports) {
-    // Get a list of unique challenge numbers
     const uniqueChallenges = [...new Set(crimeReports.flatMap(report => report.reports.map(challenge => Object.keys(challenge)[0])))];
     console.log(uniqueChallenges);
 
-    // Create the table headers (challenges)
     const tableHeaders = ['ID', 'First Name', 'Last Name', ...uniqueChallenges.map(challenge => challenge)];
 
     // Create the table rows
@@ -387,7 +372,6 @@ function generateCrimeReportTable(crimeReports) {
         return rowData;
     });
 
-    // Generate the table HTML
     const tableHTML = `
         <table>
             <thead>
@@ -450,7 +434,4 @@ async function createStudentProgress(courseInput, attendanceInput, validDatesInp
         console.error('Error creating student table:', error);
     }
 };
-
-createStudentProgress(myCourse, attendanceStored, validatesStored, challengeIds);
-createStudentProgress(myCourse2, attendanceStored2, validatesStored, challengeIds2);
 
