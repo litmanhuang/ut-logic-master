@@ -91,7 +91,7 @@ async function fetchCarnapStudentData(course, instructor, apiSecret) {
         return data;
     } catch (error) {
         console.error('Error fetching data:', error);
-        return []; // Return an empty array in case of an error
+        return []; 
     }
 }
 
@@ -107,9 +107,9 @@ async function getStudentAttendence (id, attendanceInputs){
     }
 }
 
-function generateTable(data){
+function generateTable(data, courseName){
     const heading = document.createElement("h1")
-    heading.innerHTML = "Student Progress"
+    heading.innerHTML = decodeURIComponent(courseName)
     main.appendChild(heading)
 
     const progressTable = document.createElement("table")
@@ -427,7 +427,7 @@ async function createStudentProgress(courseInput, attendanceInput, validDatesInp
             console.log(challengeData)
         }
         console.log(crimeReports);
-        generateTable(studentCarnapList);
+        generateTable(studentCarnapList, courseInput);
         generateAndPopulateAttendanceTable(studentCarnapList);
         generateAndPopulateCrimeReportTable(crimeReports);
     } catch (error) {
