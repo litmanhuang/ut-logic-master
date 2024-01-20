@@ -119,7 +119,7 @@ function generateTable(data, courseName){
     const tableHead = progressTable.createTHead();
     const headerRow = tableHead.insertRow();
 
-    const headers = ["student id", "first name", "last name", "email", "challenge 1", "challenge 2", "challenge 3", "challenge 4", "challenge 5", "challenge 6", "challenge 7", "challenge 8", "challenge 9",  "challenge 10",  "challenge 11",  "challenge 12"];
+    const headers = ["student id", "first name", "last name", "email", "total", "challenge 1", "challenge 2", "challenge 3", "challenge 4", "challenge 5", "challenge 6", "challenge 7", "challenge 8", "challenge 9",  "challenge 10",  "challenge 11",  "challenge 12"];
     headers.forEach(headerText => {
         const headerCell = document.createElement('th');
         headerCell.textContent = headerText;
@@ -139,11 +139,24 @@ function generateTable(data, courseName){
 
 function populateProgressTable (data, tbody){
     for (let i = 0; i < data.length; i++) {
+
+        const { id, attendance, email, firstName, lastName, ...newObject } = data[i];
+    
+            for (const key in newObject) {
+                if (newObject[key] === 'no attempt') {
+                    delete newObject[key];
+                }
+            }
+        const pointsArr = Object.values(newObject);
+        const points = pointsArr.map(Number);
+        const sum = points.reduce((total, num) => total + num, 0);
+
         let row =`<tr> 
                         <td> ${data[i].id}</td>
                         <td> ${data[i].firstName}</td>
                         <td> ${data[i].lastName}</td>
                         <td> ${data[i].email}</td>
+                        <td> ${sum}</td>
                         <td> ${data[i].challenge1}</td>
                         <td> ${data[i].challenge2}</td>
                         <td> ${data[i].challenge3}</td>
