@@ -40,11 +40,7 @@ const validatesStored2 = localStorage.getItem('challengeDatesStoredLocal2');
 const attendanceStored2 = localStorage.getItem('attendanceStoredLocal2');
 
 const challengeIds = [6205, 6204, 6206, 6207, 6208, 6209, 6210, 6211, 6212, 6213, 6214, 6215];
-
-// const testStored = localStorage.getItem('testStoredLocal');
-// console.log(testStored);
-// const testJSON = JSON.parse(testStored);
-// console.log(testJSON);
+const challengeIds2 = [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011, 3012];
 
 async function fetchCarnapStudentData(course, instructor, apiSecret) {
 
@@ -80,67 +76,6 @@ async function getStudentAttendence (id, attendanceInputs){
 }
 
 const main = document.getElementById("main");
-// const inputDiv = document.createElement("div");
-
-// const attendanceInputDiv = document.createElement("div");
-// attendanceInputDiv.textContent = "upload attendance file here";
-
-// const challengeInputDiv = document.createElement("div");
-// challengeInputDiv.textContent = "upload challenge dates file here";
-
-// main.appendChild(attendanceInputDiv);
-// main.appendChild(challengeInputDiv);
-// main.appendChild(inputDiv);
-
-// const attendanceInput = document.createElement('input');
-// attendanceInput.type = 'file';
-// attendanceInput.id = 'attendanceInput';
-
-// const challengeDateInput = document.createElement('input');
-// challengeDateInput.type = 'file';
-// challengeDateInput.id = 'challengeDateInput';
-
-// attendanceInputDiv.appendChild(attendanceInput);
-// challengeInputDiv.appendChild(challengeDateInput);
-
-// attendanceInput.addEventListener('change', handleAttendanceFile);
-
-// async function handleAttendanceFile(event) {
-//     const file = event.target.files[0];
-
-//     try {
-//         const attendance = await readJSONFile(file);
-//         console.log('Attendance data:', attendance);
-
-//         // Call the main function with the attendance data
-//         await createStudentProgress(attendance);
-//     } catch (error) {
-//         console.error('Error reading JSON file:', error);
-//     }
-// }
-
-// async function readJSONFile(file) {
-//     return new Promise((resolve, reject) => {
-//         const reader = new FileReader();
-
-//         reader.onload = (event) => {
-//             try {
-//                 const result = event.target.result;
-//                 const attendanceData = JSON.parse(result);
-
-//                 resolve(attendanceData);
-//             } catch (error) {
-//                 reject(error);
-//             }
-//         };
-
-//         reader.onerror = (error) => {
-//             reject(error);
-//         };
-
-//         reader.readAsText(file);
-//     });
-// }
 
 function generateTable(data){
     const heading = document.createElement("h1")
@@ -379,184 +314,212 @@ async function findChallengeResult(data, attendance, validDatesInput, challengeI
     return challengeData;
 }
 
-async function catchCrime(id, firstName, lastName, assignments, validDates){
+// async function catchCrime(id, firstName, lastName, assignments, validDates){
+//     let crimeReport = {
+//         id: id, 
+//         firstName: firstName, 
+//         lastName: lastName,
+//         reports: [
+//             {challenge1: ""},
+//             {challenge2: ""},
+//             {challenge3: ""},
+//             {challenge4: ""},
+//             {challenge5: ""},
+//             {challenge6: ""},
+//             {challenge7: ""},
+//             {challenge8: ""},
+//             {challenge9: ""},
+//             {challenge10: ""},
+//             {challenge11: ""},
+//             {challenge12: ""},
+//         ]
+//     } 
+
+//     for (let i = 0; i < assignments.length; i++) {
+
+//         let challenge = assignments[i].problemSubmissionAssignmentId
+//         let accessDate = new Date (assignments[i].problemSubmissionTime)
+
+//         switch (challenge) {
+//             // challenge 1 id = 6205
+//             case 6205:
+//             // case 3001:
+//             let isCrimeChallenge1 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge1){
+//                 console.log("yes");
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[0].challenge1 = crimeDate;
+//             }else{
+//                 console.log("no");
+//                 console.log(accessDate);
+//                 crimeReport.reports[0].challenge1 = "okay";
+//             }
+//                 break;
+
+//             // challenge 2 id = 6204
+//             case 6204:
+//             // case 3002:
+//             console.log(validDates);
+//             let isCrimeChallenge2 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge2){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[1].challenge2 = crimeDate;
+//             }else{
+//                 crimeReport.reports[1].challenge2 = "okay";
+//             }
+//                 break;
+            
+//             // challenge 3 id = 6206
+//             case 6206:
+//             // case 3003:
+//             let isCrimeChallenge3 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge3){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[2].challenge3 = crimeDate;
+//             }else{
+//                 crimeReport.reports[2].challenge3 = "okay";
+//             }
+//                 break;
+
+//             // challenge 4 id = 6207
+//             case 6207:
+//             // case 3004:
+//             let isCrimeChallenge4 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge4){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[3].challenge4 = crimeDate;
+//             }else{
+//                 crimeReport.reports[3].challenge4 = "okay";
+//             }
+//                 break;
+
+//             // challenge 5 id = 6208
+//             case 6208:
+//             // case 3005:
+//             let isCrimeChallenge5 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge5){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[4].challenge5 = crimeDate;
+//             }else{
+//                 crimeReport.reports[4].challenge5 = "okay";
+//             }
+//                 break;
+
+//             // challenge 6 id = 6209
+//             case 6209:
+//             // case 3006:
+//             let isCrimeChallenge6 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge6){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[5].challenge6 = crimeDate;
+//             }else{
+//                 crimeReport.reports[5].challenge6 = "okay";
+//             }
+//                 break;
+
+//             // challenge 7 id = 6210
+//             case 6210:
+//             // case 3007:
+//             let isCrimeChallenge7 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge7){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[6].challenge7 = crimeDate;
+//             }else{
+//                 crimeReport.reports[6].challenge7 = "okay";
+//             }
+//                 break;
+
+//             // challenge 8 id = 6211
+//             case 6211:
+//             // case 3008:
+//             let isCrimeChallenge8 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge8){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[7].challenge8 = crimeDate;
+//             }else{
+//                 crimeReport.reports[7].challenge8 = "okay";
+//             }
+//                 break;
+
+//             // challenge 9 id = 6212
+//             case 6211:
+//             // case 3008:
+//             let isCrimeChallenge9 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge9){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[8].challenge9 = crimeDate;
+//             }else{
+//                 crimeReport.reports[8].challenge9 = "okay";
+//             }
+//                 break;
+
+//             // challenge 10 id = 6213
+//             case 6213:
+//             // case 3010:
+//             let isCrimeChallenge10 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge10){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[9].challenge10 = crimeDate;
+//             }else{
+//                 crimeReport.reports[9].challenge10 = "okay";
+//             }
+//                 break;
+
+//             // challenge 11 id = 6214 
+//             case 6214:
+//             // case 3011:
+//             let isCrimeChallenge11 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge11){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[10].challenge11 = crimeDate;
+//             }else{
+//                 crimeReport.reports[10].challenge11 = "okay";
+//             }
+//                 break;
+
+//             // challenge 12 id = 6215
+//             case 6215:
+//             // case 3012:
+//             let isCrimeChallenge12 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
+//             if (isCrimeChallenge12){
+//                  const crimeDate = accessDate.toString();
+//                  crimeReport.reports[11].challenge12 = crimeDate;
+//             }else{
+//                 crimeReport.reports[11].challenge12 = "okay";
+//             }
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }
+//     return crimeReport;
+// }
+
+async function catchCrime(id, firstName, lastName, assignments, validDates, challengeIds) {
     let crimeReport = {
-        id: id, 
-        firstName: firstName, 
+        id: id,
+        firstName: firstName,
         lastName: lastName,
-        reports: [
-            {challenge1: ""},
-            {challenge2: ""},
-            {challenge3: ""},
-            {challenge4: ""},
-            {challenge5: ""},
-            {challenge6: ""},
-            {challenge7: ""},
-            {challenge8: ""},
-            {challenge9: ""},
-            {challenge10: ""},
-            {challenge11: ""},
-            {challenge12: ""},
-        ]
-    } 
+        reports: challengeIds.map(challengeId => ({ [`${challengeId}`]: "" }))
+    };
 
     for (let i = 0; i < assignments.length; i++) {
+        let challenge = assignments[i].problemSubmissionAssignmentId;
+        let accessDate = new Date(assignments[i].problemSubmissionTime);
+        let index = challengeIds.indexOf(challenge);
 
-        let challenge = assignments[i].problemSubmissionAssignmentId
-        let accessDate = new Date (assignments[i].problemSubmissionTime)
+        if (index !== -1) {
+            let isCrimeChallenge = !validDates.some(date => accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
 
-        switch (challenge) {
-            // challenge 1 id = 6205
-            case 6205:
-            // case 3001:
-            let isCrimeChallenge1 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge1){
-                console.log("yes");
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[0].challenge1 = crimeDate;
-            }else{
-                console.log("no");
-                console.log(accessDate);
-                crimeReport.reports[0].challenge1 = "okay";
+            if (isCrimeChallenge) {
+                const crimeDate = accessDate.toString();
+                crimeReport.reports[index][`${challenge}`] = crimeDate;
+            } else {
+                crimeReport.reports[index][`${challenge}`] = "okay";
             }
-                break;
-
-            // challenge 2 id = 6204
-            case 6204:
-            // case 3002:
-            console.log(validDates);
-            let isCrimeChallenge2 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge2){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[1].challenge2 = crimeDate;
-            }else{
-                crimeReport.reports[1].challenge2 = "okay";
-            }
-                break;
-            
-            // challenge 3 id = 6206
-            case 6206:
-            // case 3003:
-            let isCrimeChallenge3 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge3){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[2].challenge3 = crimeDate;
-            }else{
-                crimeReport.reports[2].challenge3 = "okay";
-            }
-                break;
-
-            // challenge 4 id = 6207
-            case 6207:
-            // case 3004:
-            let isCrimeChallenge4 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge4){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[3].challenge4 = crimeDate;
-            }else{
-                crimeReport.reports[3].challenge4 = "okay";
-            }
-                break;
-
-            // challenge 5 id = 6208
-            case 6208:
-            // case 3005:
-            let isCrimeChallenge5 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge5){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[4].challenge5 = crimeDate;
-            }else{
-                crimeReport.reports[4].challenge5 = "okay";
-            }
-                break;
-
-            // challenge 6 id = 6209
-            case 6209:
-            // case 3006:
-            let isCrimeChallenge6 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge6){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[5].challenge6 = crimeDate;
-            }else{
-                crimeReport.reports[5].challenge6 = "okay";
-            }
-                break;
-
-            // challenge 7 id = 6210
-            case 6210:
-            // case 3007:
-            let isCrimeChallenge7 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge7){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[6].challenge7 = crimeDate;
-            }else{
-                crimeReport.reports[6].challenge7 = "okay";
-            }
-                break;
-
-            // challenge 8 id = 6211
-            case 6211:
-            // case 3008:
-            let isCrimeChallenge8 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge8){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[7].challenge8 = crimeDate;
-            }else{
-                crimeReport.reports[7].challenge8 = "okay";
-            }
-                break;
-
-            // challenge 9 id = 6212
-            case 6211:
-            // case 3008:
-            let isCrimeChallenge9 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge9){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[8].challenge9 = crimeDate;
-            }else{
-                crimeReport.reports[8].challenge9 = "okay";
-            }
-                break;
-
-            // challenge 10 id = 6213
-            case 6213:
-            // case 3010:
-            let isCrimeChallenge10 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge10){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[9].challenge10 = crimeDate;
-            }else{
-                crimeReport.reports[9].challenge10 = "okay";
-            }
-                break;
-
-            // challenge 11 id = 6214 
-            case 6214:
-            // case 3011:
-            let isCrimeChallenge11 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge11){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[10].challenge11 = crimeDate;
-            }else{
-                crimeReport.reports[10].challenge11 = "okay";
-            }
-                break;
-
-            // challenge 12 id = 6215
-            case 6215:
-            // case 3012:
-            let isCrimeChallenge12 = !validDates.some((date)=> accessDate >= new Date(date.startTime) && accessDate <= new Date(date.endTime));
-            if (isCrimeChallenge12){
-                 const crimeDate = accessDate.toString();
-                 crimeReport.reports[11].challenge12 = crimeDate;
-            }else{
-                crimeReport.reports[11].challenge12 = "okay";
-            }
-                break;
-            default:
-                break;
         }
     }
+
     return crimeReport;
 }
 
@@ -647,7 +610,7 @@ async function createStudentProgress(courseInput, attendanceInput, validDatesInp
             let attendance = await getStudentAttendence(studentCarnapData.id, attendanceParsed);
             console.log(attendance);
 
-            let studentCrimeReport = await catchCrime (studentCarnapData.id, studentCarnapData.firstName, studentCarnapData.lastName, assignmentData, validDatesInputParsed);
+            let studentCrimeReport = await catchCrime (studentCarnapData.id, studentCarnapData.firstName, studentCarnapData.lastName, assignmentData, validDatesInputParsed, challengeIds);
             crimeReports.push(studentCrimeReport);
             let challengeData = await findChallengeResult(assignmentData, attendance, validDatesInputParsed, challengeIds);
 
