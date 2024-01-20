@@ -1,6 +1,8 @@
 ## challenges progress dashboard
 impplement mastery grade system with Carnap.io 
 
+https://carnap.io/shared/litmanhuang@gmail.com/student_progress_app.md
+
 ## usage
 1. download table.js and courseConfig.js
 2. open courseConfig.js and insert the required data
