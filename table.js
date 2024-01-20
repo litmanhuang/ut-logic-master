@@ -588,7 +588,7 @@ function generateCrimeReportTable(crimeReports) {
 }
 
 //main
-async function createStudentProgress(courseInput, attendanceInput, validDatesInput) {
+async function createStudentProgress(courseInput, attendanceInput, validDatesInput, challengeIdInput) {
     const attendanceParsed = JSON.parse(attendanceInput);
     const validDatesInputParsed = JSON.parse(validDatesInput);
 
@@ -610,9 +610,9 @@ async function createStudentProgress(courseInput, attendanceInput, validDatesInp
             let attendance = await getStudentAttendence(studentCarnapData.id, attendanceParsed);
             console.log(attendance);
 
-            let studentCrimeReport = await catchCrime (studentCarnapData.id, studentCarnapData.firstName, studentCarnapData.lastName, assignmentData, validDatesInputParsed, challengeIds);
+            let studentCrimeReport = await catchCrime (studentCarnapData.id, studentCarnapData.firstName, studentCarnapData.lastName, assignmentData, validDatesInputParsed, challengeIdInput);
             crimeReports.push(studentCrimeReport);
-            let challengeData = await findChallengeResult(assignmentData, attendance, validDatesInputParsed, challengeIds);
+            let challengeData = await findChallengeResult(assignmentData, attendance, validDatesInputParsed, challengeIdInput);
 
             let student = new studentCarnap(studentCarnapData.id, studentCarnapData.email, studentCarnapData.firstName, studentCarnapData.lastName, challengeData[0], challengeData[1],challengeData[2], challengeData[3], challengeData[4], challengeData[5], challengeData[6], challengeData[7], challengeData[8], challengeData[9], challengeData[10], challengeData[11], attendance);
 
@@ -630,7 +630,7 @@ async function createStudentProgress(courseInput, attendanceInput, validDatesInp
     }
 };
 
-createStudentProgress(myCourse, attendanceStored, validatesStored);
-createStudentProgress(myCourse2, attendanceStored2, validatesStored2);
+createStudentProgress(myCourse, attendanceStored, validatesStored, challengeIds);
+createStudentProgress(myCourse2, attendanceStored2, validatesStored2, challengeIds2);
 // downloadFile(exampleData, exampleFileName, exampleFileType);
 
