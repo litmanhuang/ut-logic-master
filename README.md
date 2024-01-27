@@ -11,8 +11,8 @@ https://carnap.io/shared/litmanhuang@gmail.com/student_progress_app.md
 5. open the .md file and insert the urls to the two files (see student_progress_app.md for example)
 
 ## preview
-![Screenshot 2024-01-14 at 20 19 43](https://github.com/litmanhuang/The-Logic-Master/assets/77632077/2e483cba-0aab-4666-b002-cfec3443beca)
+<img width="1374" alt="Screenshot 2024-01-27 at 21 34 39" src="https://github.com/litmanhuang/The-Logic-Master/assets/77632077/b515de5c-1701-4ffe-8584-2e8fc842ef1f">
+<img width="693" alt="Screenshot 2024-01-27 at 21 34 56" src="https://github.com/litmanhuang/The-Logic-Master/assets/77632077/f79050f5-d592-47ab-86af-52f2fedce6fc">
+<img width="642" alt="Screenshot 2024-01-27 at 21 35 17" src="https://github.com/litmanhuang/The-Logic-Master/assets/77632077/219bf43e-ab96-4cba-a8de-d722f37c7ba4">
 
-![Screenshot 2024-01-14 at 20 19 59](https://github.com/litmanhuang/The-Logic-Master/assets/77632077/d0b76c6f-f157-4e5b-9ac5-603df4f858ba)
 
-![Screenshot 2024-01-14 at 20 20 19](https://github.com/litmanhuang/The-Logic-Master/assets/77632077/608d739e-8899-4c66-9b31-8b9e96823288)
