@@ -2,6 +2,7 @@
 // catch cheating
 // IO excel input attendance 
 // grant retake tokens
+
 let courseUTLogicList =[];
 
 function studentUTLogic (courseId, courseName, courseDate){
@@ -114,12 +115,12 @@ function generateTable(data, courseName){
 
     const progressTable = document.createElement("table")
     progressTable.id = "progressTable"
-    progressTable.className="table table-striped"
+    progressTable.className="table table-striped table-bordered"
 
     const tableHead = progressTable.createTHead();
     const headerRow = tableHead.insertRow();
 
-    const headers = ["student id", "first name", "last name", "email", "total", "challenge 1", "challenge 2", "challenge 3", "challenge 4", "challenge 5", "challenge 6", "challenge 7", "challenge 8", "challenge 9",  "challenge 10",  "challenge 11",  "challenge 12"];
+    const headers = ["student id", "first name", "last name", "email", "passed challenge(s)", "challenge 1", "challenge 2", "challenge 3", "challenge 4", "challenge 5", "challenge 6", "challenge 7", "challenge 8", "challenge 9",  "challenge 10",  "challenge 11",  "challenge 12"];
     headers.forEach(headerText => {
         const headerCell = document.createElement('th');
         headerCell.textContent = headerText;
@@ -147,6 +148,11 @@ function populateProgressTable (data, tbody){
                     delete newObject[key];
                 }
             }
+
+            for (const [key, value] of Object.entries(newObject)) {
+                newObject[key] = value === '2' ? 1 : 0;
+              }
+              
         const pointsArr = Object.values(newObject);
         const points = pointsArr.map(Number);
         const sum = points.reduce((total, num) => total + num, 0);
@@ -183,7 +189,7 @@ function generateAndPopulateAttendanceTable(students) {
 
     const tableContainer = document.createElement("div");
     tableContainer.id = "attendanceTable";
-    tableContainer.className = "table table-striped";
+    tableContainer.className = "table table-striped table-bordered";
     main.appendChild(tableContainer);
     tableContainer.innerHTML = attendanceTableHTML;
 }
@@ -215,6 +221,8 @@ function generateAttendanceTable(students) {
 
     // Generate the table HTML
     const tableHTML = `
+
+
         <table>
             <thead>
                 <tr>
@@ -303,12 +311,22 @@ async function findChallengeResult(data, attendance, validDatesInput, challengeI
 
         let index = challengeIdArray.indexOf(challenge);
 
+        // if (index !== -1) {
+        //     if (correct !== null && challengeData[index] === "no attempt" && dateIsValid(accessDate, validDatesInput, attendance)) {
+        //         challengeData[index] = 0;
+        //     }
+
+        //     if (correct && dateIsValid(accessDate, validDatesInput, attendance)) {
+        //         challengeData[index] = challengeData[index] + 1;
+        //     }
+        // }
+
         if (index !== -1) {
-            if (correct !== null && challengeData[index] === "no attempt" && dateIsValid(accessDate, validDatesInput, attendance)) {
+            if (correct !== null && challengeData[index] === "no attempt") {
                 challengeData[index] = 0;
             }
 
-            if (correct && dateIsValid(accessDate, validDatesInput, attendance)) {
+            if (correct ) {
                 challengeData[index] = challengeData[index] + 1;
             }
         }
@@ -360,7 +378,7 @@ function generateAndPopulateCrimeReportTable(crimeReports) {
 
     const tableContainer = document.createElement("div");
     tableContainer.id = "crimeReportTable";
-    tableContainer.className = "table table-striped";
+    tableContainer.className = "table table-striped table-bordered";
     main.appendChild(tableContainer);
 
     tableContainer.innerHTML = crimeReportTableHTML;
