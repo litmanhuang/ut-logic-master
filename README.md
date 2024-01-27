@@ -1,6 +1,9 @@
 ## challenges progress dashboard
 impplement mastery grade system with Carnap.io 
 
+In the example, each challenge has two questions. The student can only pass the challenge if both questions are correct i.e. 2/2 . 
+
+Here is a working example (access to Carnap.io is required)
 https://carnap.io/shared/litmanhuang@gmail.com/student_progress_app.md
 
 ## usage
