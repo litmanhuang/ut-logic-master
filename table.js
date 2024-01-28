@@ -117,7 +117,7 @@ function generateTable(data, courseName){
 
     const progressTable = document.createElement("table")
     progressTable.id = "progressTable"
-    progressTable.className="table table-striped table-bordered"
+    progressTable.className="table table-bordered table-hover"
 
   const tableHead = progressTable.createTHead();
   const headerRow = tableHead.insertRow();
@@ -191,7 +191,7 @@ function generateAndPopulateAttendanceTable(students) {
 
     const tableContainer = document.createElement("div");
     tableContainer.id = "attendanceTable";
-    tableContainer.className = "table table-striped table-bordered";
+    tableContainer.className = "table table-bordered table-hover";
     main.appendChild(tableContainer);
     tableContainer.innerHTML = attendanceTableHTML;
 }
@@ -429,7 +429,7 @@ function generateAndPopulateCrimeReportTable(crimeReports) {
 
     const tableContainer = document.createElement("div");
     tableContainer.id = "crimeReportTable";
-    tableContainer.className = "table table-striped table-bordered";
+    tableContainer.className = "table table-bordered table-hover";
     main.appendChild(tableContainer);
 
   tableContainer.innerHTML = crimeReportTableHTML;
@@ -446,9 +446,9 @@ function generateCrimeReportTable(crimeReports) {
   console.log(uniqueChallenges);
 
   const tableHeaders = [
-    "ID",
-    "First Name",
-    "Last Name",
+    "student Id",
+    "first name",
+    "last name",
     ...uniqueChallenges.map((challenge) => challenge),
   ];
 
