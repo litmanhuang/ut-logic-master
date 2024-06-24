@@ -4,3 +4,6 @@ mock-data.js
 mockTable.js
 frontend/.env
 backend/.env
+# Node modules
+backend/node_modules/
+backend/src/server.js
