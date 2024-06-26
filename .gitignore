@@ -2,8 +2,10 @@ upload.sh
 course.js
 mock-data.js
 mockTable.js
-frontend/.env
+ut-logic-react-app/.env
 backend/.env
-# Node modules
+
 backend/node_modules/
+ut-logic-react-app/node_modules/
 backend/src/server.js
+node_modules

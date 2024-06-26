@@ -1,13 +1,16 @@
 import axios, { AxiosError } from 'axios';
 import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const PORT: number = parseInt(process.env.PORT as string, 10) || 3000;
 const API_KEY: string = process.env.API_KEY || '';
-console.log('API_KEY', API_KEY);
+app.use(cors({
+    origin: 'http://localhost:3001'
+  }));
 
 interface Student {
     email: string;

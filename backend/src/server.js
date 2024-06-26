@@ -15,11 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 const API_KEY = process.env.API_KEY || '';
-console.log('API_KEY', API_KEY);
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:3001'
+}));
 function getStudents(course, instructor) {
     return __awaiter(this, void 0, void 0, function* () {
         const requestOptions = {
