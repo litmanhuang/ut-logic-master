@@ -7,5 +7,5 @@ backend/.env
 
 backend/node_modules/
 ut-logic-react-app/node_modules/
-backend/src/server.js
-node_modules
+/backend/src/server.js
+/node_modules
