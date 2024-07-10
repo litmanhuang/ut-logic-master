@@ -1,3 +1,5 @@
+import Table from "react-bootstrap/Table";
+
 const Student = () => {
   const studentsArray = [
     {
@@ -55,16 +57,33 @@ const Student = () => {
       id: 25545,
     },
   ];
-  return <div>
-    <h1>Students</h1>
-    <ul>
-      {studentsArray.map((student) => (
-        <li key={student.id}>
-          {student.firstName} {student.lastName} ({student.email})
-        </li>
-      ))}
-    </ul>
-  </div>;
+  const firstStudent = studentsArray[0];
+  const headerKeys = Object.keys(firstStudent);
+
+  return (
+    <div className="center-table">
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            {headerKeys.map((key, index) => (
+              <th key={index}>{key}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {studentsArray.map((student) => (
+            <tr key={student.id}>
+              <td>{student.email}</td>
+              <td>{student.lastName}</td>
+              <td>{student.firstName}</td>
+              <td>{student.id}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
+  );
 };
 
 export default Student;
