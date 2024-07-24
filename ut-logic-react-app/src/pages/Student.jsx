@@ -18,16 +18,14 @@ const Student = () => {
               <th>id</th>
             </tr>
           </thead>
-          {students.length === 0 && (
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          )}
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
         </Table>
       </div>
     );
   }
-  
+
   const results = students.data;
 
   return (
@@ -41,18 +39,16 @@ const Student = () => {
             <th>id</th>
           </tr>
         </thead>
-        (
-          <tbody>
-            {results.map((student) => (
-              <tr key={student.id}>
-                <td>{student.email}</td>
-                <td>{student.lastName}</td>
-                <td>{student.firstName}</td>
-                <td>{student.id}</td>
-              </tr>
-            ))}
-          </tbody>
-        )
+        <tbody>
+          {results.map((student) => (
+            <tr key={student.id}>
+              <td>{student.email}</td>
+              <td>{student.lastName}</td>
+              <td>{student.firstName}</td>
+              <td>{student.id}</td>
+            </tr>
+          ))}
+        </tbody>
       </Table>
     </div>
   );
