@@ -1,19 +1,34 @@
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import fetchStudent from "../fetchStudent";
 
 const Student = () => {
-  const [students, setStudents] = useState([]);
+  const students = useQuery(["students"], fetchStudent);
 
-  useEffect(() => {
-    requestStudents();
-  },[]);
-
-  async function requestStudents() {
-    const res = await fetch("http://localhost:3000/students");
-    const json = await res.json();
-    setStudents(json);
+  if (students.isLoading) {
+    return (
+      <div className="center-table">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>email</th>
+              <th>last name</th>
+              <th>first name</th>
+              <th>id</th>
+            </tr>
+          </thead>
+          {students.length === 0 && (
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          )}
+        </Table>
+      </div>
+    );
   }
+  
+  const results = students.data;
 
   return (
     <div className="center-table">
@@ -26,15 +41,9 @@ const Student = () => {
             <th>id</th>
           </tr>
         </thead>
-
-        {students.length === 0 && (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
-        {students.length > 0 && (
+        (
           <tbody>
-            {students.map((student) => (
+            {results.map((student) => (
               <tr key={student.id}>
                 <td>{student.email}</td>
                 <td>{student.lastName}</td>
@@ -43,7 +52,7 @@ const Student = () => {
               </tr>
             ))}
           </tbody>
-        )}
+        )
       </Table>
     </div>
   );
