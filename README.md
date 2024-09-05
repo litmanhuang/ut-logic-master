@@ -6,11 +6,7 @@ In the example, each challenge has two questions. The student can only pass the 
 Here is a working example (access to Carnap.io is required)
 https://carnap.io/shared/litmanhuang@gmail.com/student_progress_app.md
 
-https://carnap.io/shared/litmanhuang@gmail.com/course.js
-https://carnap.io/shared/litmanhuang@gmail.com/appScript.js
-
-name reference 
-
+### name reference 
 |repo|carnap|
 |----|------|
 |student_progress_app.md|student_progress_app.md|
