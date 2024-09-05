@@ -6,6 +6,17 @@ In the example, each challenge has two questions. The student can only pass the 
 Here is a working example (access to Carnap.io is required)
 https://carnap.io/shared/litmanhuang@gmail.com/student_progress_app.md
 
+https://carnap.io/shared/litmanhuang@gmail.com/course.js
+https://carnap.io/shared/litmanhuang@gmail.com/appScript.js
+
+name reference 
+
+|repo|carnap|
+|----|------|
+|student_progress_app.md|student_progress_app.md|
+|courseConfig.js|course.js|
+|table.js|appScript.js|
+
 ## usage
 1. download table.js and courseConfig.js
 2. open courseConfig.js and insert the required data
