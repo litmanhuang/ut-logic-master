@@ -4,18 +4,21 @@ import { useQuery } from "@tanstack/react-query";
 import fetchStudent from "../fetchStudent";
 
 const Student = () => {
-  const students = useQuery(["students"], fetchStudent);
+  const { data: students, isLoading: isStudentsLoading } = useQuery(
+    ["students"],
+    fetchStudent
+  );
 
-  if (students.isLoading) {
+  if (isStudentsLoading) {
     return (
       <div className="center-table">
         <Table striped bordered hover>
           <thead>
             <tr>
+              <th>id</th>
               <th>email</th>
               <th>last name</th>
               <th>first name</th>
-              <th>id</th>
             </tr>
           </thead>
           <Spinner animation="border" role="status">
@@ -26,26 +29,24 @@ const Student = () => {
     );
   }
 
-  const results = students.data;
-
   return (
     <div className="center-table">
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th>id</th>
             <th>email</th>
             <th>last name</th>
             <th>first name</th>
-            <th>id</th>
           </tr>
         </thead>
         <tbody>
-          {results.map((student) => (
+          {students?.map((student) => (
             <tr key={student.id}>
+              <td>{student.id}</td>
               <td>{student.email}</td>
               <td>{student.lastName}</td>
               <td>{student.firstName}</td>
-              <td>{student.id}</td>
             </tr>
           ))}
         </tbody>
